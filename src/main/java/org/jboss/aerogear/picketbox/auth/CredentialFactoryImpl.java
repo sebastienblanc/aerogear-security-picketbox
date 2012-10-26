@@ -1,6 +1,6 @@
 package org.jboss.aerogear.picketbox.auth;
 
-import org.jboss.aerogear.picketbox.model.AeroGearUser;
+import org.jboss.aerogear.security.model.AeroGearUser;
 import org.picketbox.core.authentication.credential.OTPCredential;
 import org.picketlink.credential.LoginCredentials;
 

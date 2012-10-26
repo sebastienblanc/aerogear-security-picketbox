@@ -1,5 +1,6 @@
 package org.jboss.aerogear.picketbox.util;
 
+import org.jboss.aerogear.security.util.HttpResponse;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -39,7 +40,6 @@ public class HttpResponseTest {
         when(identity.getUserContext()).thenReturn(userContext);
         when(userContext.getRoleNames()).thenReturn(roleNames);
     }
-
 
 
     @After

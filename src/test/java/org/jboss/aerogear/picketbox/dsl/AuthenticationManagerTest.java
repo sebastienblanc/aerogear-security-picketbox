@@ -1,9 +1,9 @@
 package org.jboss.aerogear.picketbox.dsl;
 
-import org.jboss.aerogear.picketbox.auth.AuthenticationManager;
-import org.jboss.aerogear.picketbox.auth.AuthenticationManagerImpl;
-import org.jboss.aerogear.picketbox.model.AeroGearUser;
+import org.jboss.aerogear.picketbox.spi.auth.AuthenticationManagerImpl;
+import org.jboss.aerogear.security.auth.AuthenticationManager;
 import org.jboss.aerogear.security.exception.AeroGearSecurityException;
+import org.jboss.aerogear.security.model.AeroGearUser;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;

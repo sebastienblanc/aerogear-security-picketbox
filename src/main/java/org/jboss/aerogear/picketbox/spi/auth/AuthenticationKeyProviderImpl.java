@@ -1,6 +1,7 @@
-package org.jboss.aerogear.picketbox.auth;
+package org.jboss.aerogear.picketbox.spi.auth;
 
-import org.jboss.aerogear.security.impl.auth.AuthenticationSecretKeyCode;
+import org.jboss.aerogear.security.idm.AuthenticationKeyProvider;
+import org.jboss.aerogear.security.auth.AuthenticationSecretKeyCode;
 import org.jboss.aerogear.security.util.Hex;
 import org.picketbox.cdi.PicketBoxIdentity;
 import org.picketbox.core.util.Base32;
@@ -13,7 +14,7 @@ import javax.inject.Inject;
 import java.io.Serializable;
 
 @SessionScoped
-public class AuthenticationKeyProvider implements Serializable {
+public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider, Serializable {
 
     @Inject
     private IdentityManager identityManager;
