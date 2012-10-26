@@ -182,13 +182,6 @@
 
         <dependency>
             <groupId>org.jboss.aerogear</groupId>
-            <artifactId>aerogear-controller</artifactId>
-            <version>0.0.4.M6-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jboss.aerogear</groupId>
             <artifactId>aerogear-security</artifactId>
             <version>0.0.5.M6-SNAPSHOT</version>
             <scope>compile</scope>
