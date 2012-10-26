@@ -17,6 +17,7 @@
 
 package org.jboss.aerogear.picketbox.authz;
 
+import org.jboss.aerogear.security.authz.IdentityManagement;
 import org.jboss.aerogear.security.model.AeroGearUser;
 import org.picketlink.idm.IdentityManager;
 import org.picketlink.idm.model.Role;

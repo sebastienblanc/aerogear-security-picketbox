@@ -18,6 +18,8 @@
 package org.jboss.aerogear.picketbox.authz;
 
 
+import org.jboss.aerogear.security.authz.IdentityManagement;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
