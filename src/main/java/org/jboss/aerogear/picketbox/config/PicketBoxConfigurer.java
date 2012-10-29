@@ -16,7 +16,7 @@
  */
 package org.jboss.aerogear.picketbox.config;
 
-import org.jboss.aerogear.picketbox.annotations.SecurityStore;
+import org.jboss.aerogear.security.annotations.SecurityStore;
 import org.picketbox.core.authentication.impl.OTPAuthenticationMechanism;
 import org.picketbox.core.config.ConfigurationBuilder;
 import org.picketlink.idm.internal.jpa.JPATemplate;

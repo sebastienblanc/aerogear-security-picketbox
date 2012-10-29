@@ -16,6 +16,7 @@
  */
 package org.jboss.aerogear.picketbox.config;
 
+import org.jboss.aerogear.security.annotations.SecurityStore;
 import org.picketlink.idm.internal.JPAIdentityStore;
 import org.picketlink.idm.internal.jpa.JPATemplate;
 import org.picketlink.idm.model.Role;
@@ -33,6 +34,7 @@ import javax.persistence.EntityManager;
 public class PicketBoxLoadUsers {
 
     @Inject
+    @SecurityStore
     private EntityManager entityManager;
 
     /**

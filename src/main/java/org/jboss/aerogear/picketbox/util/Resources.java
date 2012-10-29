@@ -16,7 +16,7 @@
  */
 package org.jboss.aerogear.picketbox.util;
 
-import org.jboss.aerogear.picketbox.annotations.SecurityStore;
+import org.jboss.aerogear.security.annotations.SecurityStore;
 
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
