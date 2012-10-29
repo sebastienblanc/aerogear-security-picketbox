@@ -16,6 +16,8 @@
  */
 package org.jboss.aerogear.picketbox.util;
 
+import org.jboss.aerogear.picketbox.annotations.SecurityStore;
+
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.persistence.EntityManager;
@@ -47,6 +49,7 @@ public class Resources {
     }
 
     @Produces
+    @SecurityStore
     public EntityManager produceEntityManager() {
         return entityManager;
     }

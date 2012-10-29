@@ -16,6 +16,7 @@
  */
 package org.jboss.aerogear.picketbox.config;
 
+import org.jboss.aerogear.picketbox.annotations.SecurityStore;
 import org.picketbox.core.authentication.impl.OTPAuthenticationMechanism;
 import org.picketbox.core.config.ConfigurationBuilder;
 import org.picketlink.idm.internal.jpa.JPATemplate;
@@ -35,6 +36,7 @@ public class PicketBoxConfigurer {
     public static final int TIMEOUT_IN_MINUTES = 30;
 
     @Inject
+    @SecurityStore
     private EntityManager entityManager;
 
     @Inject
