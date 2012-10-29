@@ -38,7 +38,7 @@ import java.util.logging.Logger;
 public class Resources {
 
     @SuppressWarnings("unused")
-    @PersistenceContext(unitName = "todo-default", type = PersistenceContextType.EXTENDED)
+    @PersistenceContext(unitName = "picketbox-default", type = PersistenceContextType.EXTENDED)
     private EntityManager entityManager;
 
     @Produces
