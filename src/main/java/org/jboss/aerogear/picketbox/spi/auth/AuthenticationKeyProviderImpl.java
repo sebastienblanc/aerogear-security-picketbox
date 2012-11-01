@@ -27,10 +27,12 @@ public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider,
 
     @PostConstruct
     public void init() {
-        User user = identity.getUserContext().getUser();
-        idmuser = identityManager.getUser(user.getKey());
+        if (identity.isLoggedIn()) {
+            User user = identity.getUserContext().getUser();
+            idmuser = identityManager.getUser(user.getKey());
 
-        secret = idmuser.getAttribute("serial");
+            secret = idmuser.getAttribute("serial");
+        }
     }
 
     public String getSecret() {
@@ -51,6 +53,6 @@ public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider,
     }
 
     public String getB32() {
-        return Base32.encode(Hex.hexToAscii(getSecret()).getBytes());
+        return Base32.encode(Hex.toAscii(getSecret()).getBytes());
     }
 }

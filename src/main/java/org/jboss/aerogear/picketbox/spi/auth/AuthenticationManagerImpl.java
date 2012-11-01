@@ -17,12 +17,13 @@
 
 package org.jboss.aerogear.picketbox.spi.auth;
 
-import org.jboss.aerogear.picketbox.auth.CredentialFactory;
 import org.jboss.aerogear.security.auth.AuthenticationManager;
-import org.jboss.aerogear.security.exception.ExceptionMessage;
+import org.jboss.aerogear.security.auth.CredentialFactory;
+import org.jboss.aerogear.security.exception.AeroGearSecurityException;
+import org.jboss.aerogear.security.exception.HttpStatus;
+import org.jboss.aerogear.security.model.AeroGearCredential;
 import org.jboss.aerogear.security.model.AeroGearUser;
 import org.picketbox.cdi.PicketBoxIdentity;
-import org.picketlink.authentication.AuthenticationException;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -36,6 +37,9 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
     @Inject
     private CredentialFactory credentialFactory;
 
+    @Inject
+    private AeroGearCredential credentials;
+
     public boolean login(AeroGearUser aeroGearUser) {
 
         credentialFactory.setCredential(aeroGearUser);
@@ -43,7 +47,7 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
         identity.login();
 
         if (!identity.isLoggedIn())
-            ExceptionMessage.AUTHENTICATION_FAILED.throwException();
+            throw new AeroGearSecurityException(HttpStatus.AUTHENTICATION_FAILED);
 
         return true;
 
@@ -53,5 +57,10 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
         if (identity.isLoggedIn()) {
             identity.logout();
         }
+    }
+
+    @Override
+    public AeroGearCredential getCredential() {
+        return credentials;
     }
 }

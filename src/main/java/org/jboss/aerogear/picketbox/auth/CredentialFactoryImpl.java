@@ -1,12 +1,14 @@
 package org.jboss.aerogear.picketbox.auth;
 
+import org.jboss.aerogear.security.auth.CredentialFactory;
 import org.jboss.aerogear.security.model.AeroGearUser;
 import org.picketbox.core.authentication.credential.OTPCredential;
+import org.picketlink.credential.Credential;
 import org.picketlink.credential.LoginCredentials;
 
 import javax.inject.Inject;
 
-public class CredentialFactoryImpl implements CredentialFactory {
+public class CredentialFactoryImpl implements CredentialFactory, Credential {
 
     private Object credential;
 
