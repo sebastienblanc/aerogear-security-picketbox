@@ -15,22 +15,30 @@
  * limitations under the License.
  */
 
-package org.jboss.aerogear.picketbox.authz;
+package org.jboss.aerogear.security.picketbox.auth;
 
+import org.jboss.aerogear.security.auth.CredentialFactory;
+import org.jboss.aerogear.security.model.AeroGearUser;
+import org.picketbox.core.authentication.credential.OTPCredential;
+import org.picketlink.credential.Credential;
+import org.picketlink.credential.LoginCredentials;
 
-import org.jboss.aerogear.security.authz.IdentityManagement;
-
-import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-@ApplicationScoped
-public class IdentityManagementImpl implements IdentityManagement {
+public class CredentialFactoryImpl implements CredentialFactory, Credential {
+
+    private Object credential;
 
     @Inject
-    private GrantConfiguration grantConfiguration;
+    private LoginCredentials loginCredentials;
+
+    public void setCredential(AeroGearUser user) {
+        this.credential = new OTPCredential(user.getId(), user.getPassword(), user.getOtp());
+        loginCredentials.setCredential(this);
+    }
 
     @Override
-    public GrantMethods grant(String... roles) {
-        return grantConfiguration.roles(roles);
+    public Object getValue() {
+        return credential;
     }
 }

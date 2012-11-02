@@ -1,6 +1,6 @@
-package org.jboss.aerogear.picketbox.dsl;
+package org.jboss.aerogear.security.picketbox.dsl;
 
-import org.jboss.aerogear.picketbox.spi.auth.AuthenticationManagerImpl;
+import org.jboss.aerogear.security.picketbox.spi.auth.AuthenticationManagerImpl;
 import org.jboss.aerogear.security.auth.AuthenticationManager;
 import org.jboss.aerogear.security.exception.AeroGearSecurityException;
 import org.jboss.aerogear.security.model.AeroGearUser;

@@ -1,7 +1,6 @@
-package org.jboss.aerogear.picketbox.model;
+package org.jboss.aerogear.security.picketbox.model;
 
 import org.jboss.aerogear.security.idm.AeroGearPrincipal;
-import org.jboss.aerogear.security.model.AeroGearUser;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;

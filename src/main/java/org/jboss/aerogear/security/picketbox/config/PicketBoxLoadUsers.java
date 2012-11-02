@@ -14,7 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.aerogear.picketbox.config;
+
+package org.jboss.aerogear.security.picketbox.config;
 
 import org.picketlink.idm.internal.JPAIdentityStore;
 import org.picketlink.idm.internal.jpa.JPATemplate;

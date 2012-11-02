@@ -15,49 +15,34 @@
  * limitations under the License.
  */
 
-package org.jboss.aerogear.picketbox.model;
+package org.jboss.aerogear.security.picketbox.spi.idm;
 
-import org.jboss.aerogear.security.idm.AeroGearIdentity;
 import org.jboss.aerogear.security.idm.AeroGearPrincipal;
-import org.jboss.aerogear.security.idm.AuthenticationKeyProvider;
-import org.jboss.aerogear.security.model.AeroGearCredential;
+import org.picketbox.cdi.PicketBoxIdentity;
 
 import javax.inject.Inject;
 import java.util.Collection;
+import java.util.Set;
 
-public class AeroGearCredentialImpl implements AeroGearCredential {
-
-    @Inject
-    private AeroGearIdentity identity;
+public class AeroGearPrincipalImpl implements AeroGearPrincipal {
 
     @Inject
-    private AuthenticationKeyProvider provider;
+    private PicketBoxIdentity identity;
 
-    @Inject
-    private AeroGearPrincipal principal;
+    @Override
+    public boolean hasRoles(Set<String> roles) {
 
-    public String getId() {
-        return identity.getUsername();
+        boolean hasRoles = false;
+
+        if (identity.isLoggedIn()) {
+            hasRoles = identity.getUserContext().getRoleNames().containsAll(roles);
+        }
+
+        return hasRoles;
     }
 
-    public String getKey() {
-        return identity.getKey();
-    }
-
-    public String getSecret() {
-        return provider.getSecret();
-    }
-
-    public String getB32() {
-        return provider.getB32();
-    }
-
-    public String getToken() {
-        return provider.getToken();
-    }
-
+    @Override
     public Collection<String> getRoles() {
-        return principal.getRoles();
+        return identity.getUserContext().getRoleNames();
     }
-
 }

@@ -1,4 +1,4 @@
-package org.jboss.aerogear.picketbox.util;
+package org.jboss.aerogear.security.picketbox.util;
 
 import org.junit.After;
 import org.junit.Before;
