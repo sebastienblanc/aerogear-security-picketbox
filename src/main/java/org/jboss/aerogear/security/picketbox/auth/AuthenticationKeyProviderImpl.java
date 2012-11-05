@@ -40,12 +40,14 @@ public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider,
     private PicketBoxIdentity identity;
 
     private User user;
+    private String secret;
 
     @PostConstruct
     public void init() {
         if (identity.isLoggedIn()) {
             User userContext = identity.getUserContext().getUser();
             this.user = identityManager.getUser(userContext.getKey());
+            secret = user.getAttribute("serial");
         }
     }
 
@@ -62,8 +64,6 @@ public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider,
     }
 
     public String getSecret() {
-
-        String secret = user.getAttribute("serial");
 
         if (secret == null) {
             secret = AuthenticationSecretKeyCode.create();
