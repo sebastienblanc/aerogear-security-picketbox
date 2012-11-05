@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.jboss.aerogear.security.picketbox.spi.auth;
+package org.jboss.aerogear.security.picketbox.auth;
 
 import org.jboss.aerogear.security.idm.AuthenticationKeyProvider;
 import org.jboss.aerogear.security.auth.AuthenticationSecretKeyCode;
@@ -39,26 +39,14 @@ public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider,
     @Inject
     private PicketBoxIdentity identity;
 
-    private String secret;
-    private User idmuser;
+    private User user;
 
     @PostConstruct
     public void init() {
         if (identity.isLoggedIn()) {
-            User user = identity.getUserContext().getUser();
-            idmuser = identityManager.getUser(user.getKey());
-
-            secret = idmuser.getAttribute("serial");
+            User userContext = identity.getUserContext().getUser();
+            this.user = identityManager.getUser(userContext.getKey());
         }
-    }
-
-    public String getSecret() {
-
-        if (secret == null) {
-            secret = AuthenticationSecretKeyCode.create();
-            idmuser.setAttribute("serial", secret);
-        }
-        return secret;
     }
 
     public String getToken() {
@@ -71,5 +59,16 @@ public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider,
 
     public String getB32() {
         return Base32.encode(Hex.toAscii(getSecret()).getBytes());
+    }
+
+    public String getSecret() {
+
+        String secret = user.getAttribute("serial");
+
+        if (secret == null) {
+            secret = AuthenticationSecretKeyCode.create();
+            user.setAttribute("serial", secret);
+        }
+        return secret;
     }
 }

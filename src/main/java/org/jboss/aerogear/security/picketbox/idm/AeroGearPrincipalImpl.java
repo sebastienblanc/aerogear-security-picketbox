@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.jboss.aerogear.security.picketbox.spi.idm;
+package org.jboss.aerogear.security.picketbox.idm;
 
 import org.jboss.aerogear.security.idm.AeroGearPrincipal;
 import org.picketbox.cdi.PicketBoxIdentity;

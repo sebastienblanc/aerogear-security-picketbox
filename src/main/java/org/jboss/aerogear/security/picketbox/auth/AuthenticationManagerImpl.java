@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.jboss.aerogear.security.picketbox.spi.auth;
+package org.jboss.aerogear.security.picketbox.auth;
 
 import org.jboss.aerogear.security.auth.AuthenticationManager;
 import org.jboss.aerogear.security.auth.CredentialFactory;
