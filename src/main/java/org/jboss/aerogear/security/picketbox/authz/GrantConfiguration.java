@@ -46,7 +46,7 @@ public class GrantConfiguration implements IdentityManagement.GrantMethods {
     }
 
     /**
-     * Passing null here because the api doesn' allows me to have user without a group
+     * Passing null here because the api doesn't allows me to have user without a group
      *
      * @param user
      */
@@ -54,9 +54,9 @@ public class GrantConfiguration implements IdentityManagement.GrantMethods {
     public void to(AeroGearUser user) {
 
         User picketLinkUser = identityManager.createUser(user.getId());
-        user.setEmail(picketLinkUser.getEmail());
-        user.setFirstName(picketLinkUser.getFirstName());
-        user.setLastName(picketLinkUser.getLastName());
+        picketLinkUser.setEmail(user.getEmail());
+        picketLinkUser.setFirstName(user.getFirstName());
+        picketLinkUser.setLastName(user.getLastName());
 
         identityManager.updatePassword(picketLinkUser, user.getPassword());
 
