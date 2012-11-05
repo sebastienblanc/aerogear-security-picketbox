@@ -188,6 +188,13 @@
         </dependency>
 
         <dependency>
+            <groupId>org.jboss.aerogear</groupId>
+            <artifactId>aerogear-controller</artifactId>
+            <version>0.0.4.M6-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.jboss.spec</groupId>
             <artifactId>jboss-javaee-6.0</artifactId>
             <version>1.0.0.Final</version>
