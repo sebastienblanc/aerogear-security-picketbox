@@ -17,24 +17,31 @@
 
 package org.jboss.aerogear.security.picketbox.config;
 
-import org.picketlink.idm.internal.JPAIdentityStore;
-import org.picketlink.idm.internal.jpa.JPATemplate;
+import org.picketbox.core.identity.impl.JPAIdentityStoreContext;
+import org.picketlink.idm.IdentityManager;
+import org.picketlink.idm.credential.PasswordCredential;
+import org.picketlink.idm.model.Group;
 import org.picketlink.idm.model.Role;
 import org.picketlink.idm.model.User;
-import org.picketlink.idm.spi.IdentityStore;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 
 @Singleton
 @Startup
 public class PicketBoxLoadUsers {
 
-    @Inject
+
+    @PersistenceContext(type = PersistenceContextType.EXTENDED)
     private EntityManager entityManager;
+
+    @Inject
+    private IdentityManager identityManager;
 
     /**
      * <p>Loads some users during the first construction.</p>
@@ -42,42 +49,25 @@ public class PicketBoxLoadUsers {
     //TODO this entire initialization code will be removed
     @PostConstruct
     public void create() {
-        buildNewUser("john", "john@doe.org", "John", "Doe", "123", "admin");
-        buildNewUser("jane", "jane@doe.org", "Jane", "Doe", "123", "simple");
+        JPAIdentityStoreContext.set(this.entityManager);
+
+        User abstractj = this.identityManager.createUser("john");
+
+        abstractj.setEmail("john@doe.com");
+        abstractj.setFirstName("John");
+        abstractj.setLastName("Doe");
+
+        this.identityManager.updateCredential(abstractj, new PasswordCredential("123"));
+
+        Role roleDeveloper = this.identityManager.createRole("simple");
+        Role roleAdmin = this.identityManager.createRole("admin");
+
+        Group groupCoreDeveloper = identityManager.createGroup("Core Developers");
+
+        identityManager.grantRole(roleDeveloper, abstractj, groupCoreDeveloper);
+        identityManager.grantRole(roleAdmin, abstractj, groupCoreDeveloper);
+
+        JPAIdentityStoreContext.clear();
     }
-
-    private void buildNewUser(String username, String email, String firstname, String lastname, String password, String role) {
-
-        IdentityStore identityStore = createIdentityStore();
-
-        User jane = identityStore.createUser(username);
-        jane.setEmail(email);
-        jane.setFirstName(firstname);
-        jane.setLastName(lastname);
-
-        identityStore.updatePassword(jane, password);
-
-        Role roleSimple = identityStore.createRole(role);
-        identityStore.createMembership(roleSimple, jane, null);
-
-    }
-
-    /**
-     * Extracted from PicketLink test cases
-     *
-     * @author <a href="mailto:psilva@redhat.com">Pedro Silva</a>
-     */
-    protected IdentityStore createIdentityStore() {
-        JPAIdentityStore identityStore = new JPAIdentityStore();
-
-        JPATemplate jpaTemplate = new JPATemplate();
-
-        jpaTemplate.setEntityManager(entityManager);
-
-        identityStore.setJpaTemplate(jpaTemplate);
-
-        return identityStore;
-    }
-
 
 }

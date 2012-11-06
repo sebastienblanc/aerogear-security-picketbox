@@ -20,6 +20,7 @@ package org.jboss.aerogear.security.picketbox.authz;
 import org.jboss.aerogear.security.authz.IdentityManagement;
 import org.jboss.aerogear.security.model.AeroGearUser;
 import org.picketlink.idm.IdentityManager;
+import org.picketlink.idm.credential.PasswordCredential;
 import org.picketlink.idm.model.Role;
 import org.picketlink.idm.model.User;
 
@@ -58,7 +59,7 @@ public class GrantConfiguration implements IdentityManagement.GrantMethods {
         picketLinkUser.setFirstName(user.getFirstName());
         picketLinkUser.setLastName(user.getLastName());
 
-        identityManager.updatePassword(picketLinkUser, user.getPassword());
+        identityManager.updateCredential(picketLinkUser, new PasswordCredential("123"));
 
         for (Role role : list) {
             identityManager.grantRole(role, picketLinkUser, null);
