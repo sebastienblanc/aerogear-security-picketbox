@@ -43,13 +43,13 @@
         <picketbox.core.version>5.0.0-SNAPSHOT</picketbox.core.version>
     </properties>
 
-    <repositories>
+    <!-- <repositories>
         <repository>
             <id>cloudbees-snapshot-repository</id>
             <name>cloudbees-snapshot-repository</name>
             <url>http://repository-aerogear.forge.cloudbees.com/snapshot/</url>
         </repository>
-    </repositories>
+    </repositories>  -->
 
     <build>
         <plugins>
