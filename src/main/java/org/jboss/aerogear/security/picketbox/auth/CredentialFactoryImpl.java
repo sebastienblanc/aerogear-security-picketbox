@@ -23,8 +23,11 @@ import org.picketbox.core.authentication.credential.OTPCredential;
 import org.picketlink.credential.Credential;
 import org.picketlink.credential.LoginCredentials;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
+@ApplicationScoped
 public class CredentialFactoryImpl implements CredentialFactory, Credential {
 
     private Object credential;
