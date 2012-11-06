@@ -6,7 +6,7 @@
 
     <groupId>org.jboss.aerogear</groupId>
     <artifactId>aerogear-security-picketbox</artifactId>
-    <version>1.0.0.M1-20121105</version>
+    <version>1.0.0.M1-20121106</version>
     <packaging>jar</packaging>
     <name>AeroGear Security PicketBox</name>
 
@@ -183,7 +183,7 @@
         <dependency>
             <groupId>org.jboss.aerogear</groupId>
             <artifactId>aerogear-security</artifactId>
-            <version>1.0.0.M1-20121105</version>
+            <version>1.0.0.M1-20121106</version>
             <scope>provided</scope>
         </dependency>
 
