@@ -34,6 +34,7 @@ import org.picketlink.idm.model.User;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
+@Ignore
 public class AuthenticationKeyProviderTest {
 
     @Mock
@@ -68,7 +69,6 @@ public class AuthenticationKeyProviderTest {
     }
 
     @Test
-    @Ignore
     public void testGetAlreadyExistingSecret() throws Exception {
         String secret = "32626635656566396334";
         when(user.getAttribute("serial")).thenReturn(secret);
