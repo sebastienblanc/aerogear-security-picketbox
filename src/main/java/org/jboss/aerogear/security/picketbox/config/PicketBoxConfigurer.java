@@ -14,16 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.aerogear.picketbox.config;
+
+package org.jboss.aerogear.security.picketbox.config;
 
 import org.picketbox.core.authentication.impl.OTPAuthenticationMechanism;
 import org.picketbox.core.config.ConfigurationBuilder;
-import org.picketlink.idm.internal.jpa.JPATemplate;
+import org.picketlink.idm.jpa.schema.internal.JPATemplate;
 
 import javax.enterprise.inject.Produces;
-import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 
 /**
  * <p>Bean responsible for producing the {@link CDIConfigurationBuilder}.</p>
@@ -33,12 +32,6 @@ import javax.persistence.EntityManager;
 public class PicketBoxConfigurer {
 
     public static final int TIMEOUT_IN_MINUTES = 30;
-
-    @Inject
-    private EntityManager entityManager;
-
-    @Inject
-    private BeanManager beanManager;
 
     @Inject
     private JPATemplate jpaTemplate;
