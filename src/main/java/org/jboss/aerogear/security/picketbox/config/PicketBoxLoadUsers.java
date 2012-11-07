@@ -51,21 +51,22 @@ public class PicketBoxLoadUsers {
     public void create() {
         JPAIdentityStoreContext.set(this.entityManager);
 
-        User abstractj = this.identityManager.createUser("john");
+        User user = this.identityManager.createUser("john");
 
-        abstractj.setEmail("john@doe.com");
-        abstractj.setFirstName("John");
-        abstractj.setLastName("Doe");
+        user.setEmail("john@doe.com");
+        user.setFirstName("John");
+        user.setLastName("Doe");
 
-        this.identityManager.updateCredential(abstractj, new PasswordCredential("123"));
+
+        this.identityManager.updateCredential(user, new PasswordCredential("123"));
 
         Role roleDeveloper = this.identityManager.createRole("simple");
         Role roleAdmin = this.identityManager.createRole("admin");
 
         Group groupCoreDeveloper = identityManager.createGroup("Core Developers");
 
-        identityManager.grantRole(roleDeveloper, abstractj, groupCoreDeveloper);
-        identityManager.grantRole(roleAdmin, abstractj, groupCoreDeveloper);
+        identityManager.grantRole(roleDeveloper, user, groupCoreDeveloper);
+        identityManager.grantRole(roleAdmin, user, groupCoreDeveloper);
 
         JPAIdentityStoreContext.clear();
     }

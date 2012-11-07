@@ -17,10 +17,11 @@
 
 package org.jboss.aerogear.security.picketbox.auth;
 
-import org.jboss.aerogear.security.idm.AuthenticationKeyProvider;
 import org.jboss.aerogear.security.auth.AuthenticationSecretKeyCode;
+import org.jboss.aerogear.security.idm.AuthenticationKeyProvider;
 import org.jboss.aerogear.security.util.Hex;
 import org.picketbox.cdi.PicketBoxIdentity;
+import org.picketbox.core.UserContext;
 import org.picketbox.core.util.Base32;
 import org.picketlink.idm.IdentityManager;
 import org.picketlink.idm.model.User;
@@ -39,15 +40,16 @@ public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider,
     @Inject
     private PicketBoxIdentity identity;
 
+    private User idmuser;
     private User user;
-    private String secret;
 
     @PostConstruct
     public void init() {
+
         if (identity.isLoggedIn()) {
-            User userContext = identity.getUserContext().getUser();
-            this.user = identityManager.getUser(userContext.getKey());
-            secret = user.getAttribute("serial");
+            UserContext userContext = identity.getUserContext();
+            user = userContext.getUser();
+            idmuser = identityManager.getUser(user.getId());
         }
     }
 
@@ -64,6 +66,8 @@ public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider,
     }
 
     public String getSecret() {
+
+        String secret = idmuser.getAttribute("serial");
 
         if (secret == null) {
             secret = AuthenticationSecretKeyCode.create();
