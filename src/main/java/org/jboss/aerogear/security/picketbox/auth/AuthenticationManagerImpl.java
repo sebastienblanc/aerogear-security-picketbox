@@ -33,9 +33,6 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
     @Inject
     private PicketBoxIdentity identity;
 
-    @Inject
-    private AeroGearCredential credentials;
-
     public boolean login(AeroGearUser aeroGearUser) {
 
         identity.login();
@@ -51,10 +48,5 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
         if (identity.isLoggedIn()) {
             identity.logout();
         }
-    }
-
-    @Override
-    public AeroGearCredential getCredential() {
-        return credentials;
     }
 }
