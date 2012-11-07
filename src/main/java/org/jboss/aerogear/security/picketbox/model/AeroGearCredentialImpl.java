@@ -22,41 +22,50 @@ import org.jboss.aerogear.security.idm.AuthenticationKeyProvider;
 import org.jboss.aerogear.security.model.AeroGearCredential;
 import org.picketbox.cdi.PicketBoxIdentity;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.Collection;
 
 public class AeroGearCredentialImpl implements AeroGearCredential {
 
-    @Inject
-    private AuthenticationKeyProvider provider;
+    private String id;
+    private String key;
+    private String secret;
+    private String b32;
+    private String token;
+    private Collection<String> roles;
 
     @Inject
-    private AeroGearPrincipal principal;
-
-    @Inject
-    private PicketBoxIdentity identity;
+    public AeroGearCredentialImpl(AuthenticationKeyProvider provider, AeroGearPrincipal principal, PicketBoxIdentity identity) {
+        this.id = identity.getUserContext().getUser().getFirstName();
+        this.key = identity.getUserContext().getUser().getKey();
+        this.secret = provider.getSecret();
+        this.b32 = provider.getB32();
+        this.token = provider.getToken();
+        this.roles = principal.getRoles();
+    }
 
     public String getId() {
-        return identity.getUserContext().getUser().getFirstName();
+        return id;
     }
 
     public String getKey() {
-        return identity.getUserContext().getUser().getKey();
+        return key;
     }
 
     public String getSecret() {
-        return provider.getSecret();
+        return secret;
     }
 
     public String getB32() {
-        return provider.getB32();
+        return b32;
     }
 
     public String getToken() {
-        return provider.getToken();
+        return token;
     }
 
     public Collection<String> getRoles() {
-        return principal.getRoles();
+        return roles;
     }
 }

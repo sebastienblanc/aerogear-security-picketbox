@@ -26,39 +26,24 @@ import org.picketbox.core.util.Base32;
 import org.picketlink.idm.IdentityManager;
 import org.picketlink.idm.model.User;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
-import java.io.Serializable;
 
-@SessionScoped
-public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider, Serializable {
+public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider {
 
-    @Inject
-    private IdentityManager identityManager;
-
-    @Inject
-    private PicketBoxIdentity identity;
-
-    private User idmuser;
+    private static final String IDM_SECRET_ATTRIBUTE = "serial";
     private User user;
+    private UserContext context;
 
-    @PostConstruct
-    public void init() {
-
+    @Inject
+    public AuthenticationKeyProviderImpl(IdentityManager identityManager, PicketBoxIdentity identity) {
         if (identity.isLoggedIn()) {
-            UserContext userContext = identity.getUserContext();
-            user = userContext.getUser();
-            idmuser = identityManager.getUser(user.getId());
+            context = identity.getUserContext();
+            user = identityManager.getUser(context.getUser().getId());
         }
     }
 
     public String getToken() {
-        String token = null;
-        if (identity.isLoggedIn())
-            token = identity.getUserContext().getSession().getId().getId().toString();
-
-        return token;
+        return context.getSession().getId().getId().toString();
     }
 
     public String getB32() {
@@ -67,11 +52,11 @@ public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider,
 
     public String getSecret() {
 
-        String secret = idmuser.getAttribute("serial");
+        String secret = user.getAttribute(IDM_SECRET_ATTRIBUTE);
 
         if (secret == null) {
             secret = AuthenticationSecretKeyCode.create();
-            user.setAttribute("serial", secret);
+            context.getUser().setAttribute(IDM_SECRET_ATTRIBUTE, secret);
         }
         return secret;
     }

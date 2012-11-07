@@ -59,12 +59,12 @@ public class AuthenticationKeyProviderTest {
 
     @Before
     public void setUp() throws Exception {
-        keyProvider = new AuthenticationKeyProviderImpl();
         MockitoAnnotations.initMocks(this);
         when(sessionId.getId()).thenReturn("mySessionId");
         when(picketBoxSession.getId()).thenReturn(sessionId);
         when(userContext.getSession()).thenReturn(picketBoxSession);
         when(identity.getUserContext()).thenReturn(userContext);
+        keyProvider = new AuthenticationKeyProviderImpl(identityManager, identity);
     }
 
     @Test
