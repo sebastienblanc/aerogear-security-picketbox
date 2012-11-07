@@ -5,13 +5,11 @@ import org.jboss.aerogear.security.auth.CredentialFactory;
 import org.jboss.aerogear.security.exception.AeroGearSecurityException;
 import org.jboss.aerogear.security.model.AeroGearUser;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.picketbox.cdi.PicketBoxIdentity;
-import org.picketlink.credential.LoginCredentials;
 
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;

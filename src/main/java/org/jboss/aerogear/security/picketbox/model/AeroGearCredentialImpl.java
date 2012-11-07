@@ -22,7 +22,6 @@ import org.jboss.aerogear.security.idm.AuthenticationKeyProvider;
 import org.jboss.aerogear.security.model.AeroGearCredential;
 import org.picketbox.cdi.PicketBoxIdentity;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.Collection;
 
