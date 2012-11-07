@@ -22,15 +22,12 @@ import org.jboss.aerogear.security.model.AeroGearUser;
 import org.picketbox.core.authentication.credential.OTPCredential;
 import org.picketbox.core.authentication.credential.UsernamePasswordCredential;
 import org.picketlink.credential.LoginCredentials;
-import org.picketlink.idm.credential.Credential;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 @ApplicationScoped
-public class CredentialFactoryImpl implements CredentialFactory, Credential {
-
-    private Object credential;
+public class CredentialFactoryImpl implements CredentialFactory {
 
     @Inject
     private LoginCredentials loginCredentials;
