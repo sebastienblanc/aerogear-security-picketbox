@@ -22,9 +22,11 @@ import org.jboss.aerogear.security.idm.AuthenticationKeyProvider;
 import org.picketbox.cdi.PicketBoxIdentity;
 import org.picketbox.core.UserContext;
 import org.picketlink.idm.IdentityManager;
+import org.picketlink.idm.credential.PasswordCredential;
 import org.picketlink.idm.model.User;
 
 import javax.inject.Inject;
+import java.util.logging.Logger;
 
 public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider {
 
@@ -32,11 +34,17 @@ public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider 
     private User user;
     private UserContext context;
 
+    private IdentityManager identityManager;
+
+    private static final Logger LOGGER = Logger.getLogger(AuthenticationKeyProviderImpl.class.getName());
+
+
     @Inject
     public AuthenticationKeyProviderImpl(IdentityManager identityManager, PicketBoxIdentity identity) {
         if (identity.isLoggedIn()) {
             context = identity.getUserContext();
             user = identityManager.getUser(context.getUser().getId());
+            this.identityManager = identityManager;
         }
     }
 
@@ -48,9 +56,13 @@ public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider 
 
         String secret = user.getAttribute(IDM_SECRET_ATTRIBUTE);
 
+        LOGGER.info("Is there a user? " + user.getId());
+        LOGGER.info("Is there a secret? " + secret);
+
         if (secret == null) {
             secret = new Base32().random();
-            context.getUser().setAttribute(IDM_SECRET_ATTRIBUTE, secret);
+            user.setAttribute(IDM_SECRET_ATTRIBUTE, secret);
+            this.identityManager.updateCredential(user, new PasswordCredential("123"));
         }
         return secret;
     }
