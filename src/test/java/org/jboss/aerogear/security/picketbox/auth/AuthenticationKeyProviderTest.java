@@ -65,7 +65,7 @@ public class AuthenticationKeyProviderTest {
         when(picketBoxSession.getId()).thenReturn(sessionId);
         when(userContext.getSession()).thenReturn(picketBoxSession);
         when(identity.getUserContext()).thenReturn(userContext);
-        keyProvider = new AuthenticationKeyProviderImpl(identityManager, identity);
+        keyProvider = new AuthenticationKeyProviderImpl();
     }
 
     @Test

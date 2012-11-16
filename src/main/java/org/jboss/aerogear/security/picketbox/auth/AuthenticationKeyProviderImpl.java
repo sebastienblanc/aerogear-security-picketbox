@@ -20,7 +20,6 @@ package org.jboss.aerogear.security.picketbox.auth;
 import org.abstractj.cuckootp.api.Base32;
 import org.jboss.aerogear.security.idm.AuthenticationKeyProvider;
 import org.picketbox.cdi.PicketBoxIdentity;
-import org.picketbox.core.UserContext;
 import org.picketlink.idm.IdentityManager;
 import org.picketlink.idm.credential.PasswordCredential;
 import org.picketlink.idm.model.User;
@@ -31,28 +30,23 @@ import java.util.logging.Logger;
 public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider {
 
     private static final String IDM_SECRET_ATTRIBUTE = "serial";
-    private User user;
-    private UserContext context;
 
+    @Inject
     private IdentityManager identityManager;
+
+    @Inject
+    private PicketBoxIdentity identity;
 
     private static final Logger LOGGER = Logger.getLogger(AuthenticationKeyProviderImpl.class.getName());
 
 
-    @Inject
-    public AuthenticationKeyProviderImpl(IdentityManager identityManager, PicketBoxIdentity identity) {
-        if (identity.isLoggedIn()) {
-            context = identity.getUserContext();
-            user = identityManager.getUser(context.getUser().getId());
-            this.identityManager = identityManager;
-        }
-    }
-
     public String getToken() {
-        return context.getSession().getId().getId().toString();
+        return identity.getUserContext().getSession().getId().getId().toString();
     }
 
     public String getSecret() {
+
+        User user = identity.getUserContext().getUser();
 
         String secret = user.getAttribute(IDM_SECRET_ATTRIBUTE);
 
@@ -62,7 +56,7 @@ public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider 
         if (secret == null) {
             secret = new Base32().random();
             user.setAttribute(IDM_SECRET_ATTRIBUTE, secret);
-            this.identityManager.updateCredential(user, new PasswordCredential("123"));
+            identityManager.updateCredential(user, new PasswordCredential("123"));
         }
         return secret;
     }
