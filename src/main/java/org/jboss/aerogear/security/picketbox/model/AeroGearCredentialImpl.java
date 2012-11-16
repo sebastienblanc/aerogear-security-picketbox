@@ -28,18 +28,14 @@ import java.util.Collection;
 public class AeroGearCredentialImpl implements AeroGearCredential {
 
     private String id;
-    private String key;
     private String secret;
-    private String b32;
     private String token;
     private Collection<String> roles;
 
     @Inject
     public AeroGearCredentialImpl(AuthenticationKeyProvider provider, AeroGearPrincipal principal, PicketBoxIdentity identity) {
         this.id = identity.getUserContext().getUser().getId();
-        this.key = identity.getUserContext().getUser().getKey();
         this.secret = provider.getSecret();
-        this.b32 = provider.getB32();
         this.token = provider.getToken();
         this.roles = principal.getRoles();
     }
@@ -48,16 +44,8 @@ public class AeroGearCredentialImpl implements AeroGearCredential {
         return id;
     }
 
-    public String getKey() {
-        return key;
-    }
-
     public String getSecret() {
         return secret;
-    }
-
-    public String getB32() {
-        return b32;
     }
 
     public String getToken() {

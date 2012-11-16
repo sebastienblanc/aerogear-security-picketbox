@@ -40,24 +40,23 @@ public class CredentialFactoryTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    private AeroGearUser buildUser(String username, String password, String otp) {
+    private AeroGearUser buildUser(String username, String password) {
         AeroGearUser aeroGearUser = new AeroGearUser();
         aeroGearUser.setId(username);
         aeroGearUser.setPassword(password);
         aeroGearUser.setEmail(username + "@doe.com");
-        aeroGearUser.setOtp(otp);
         return aeroGearUser;
     }
 
     @Test
     @Ignore
     public void testGetSimpleCredential() throws Exception {
-        credentialFactory.setOtpCredential(buildUser("john", "123", null));
+        credentialFactory.setCredential(buildUser("john", "123"));
     }
 
     @Test
     @Ignore
     public void testGetOtpCredential() throws Exception {
-        credentialFactory.setOtpCredential(buildUser("john", "123", "myOtp"));
+        credentialFactory.setCredential(buildUser("john", null));
     }
 }

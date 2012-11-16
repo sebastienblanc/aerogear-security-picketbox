@@ -17,12 +17,10 @@
 
 package org.jboss.aerogear.security.picketbox.auth;
 
-import org.jboss.aerogear.security.auth.AuthenticationSecretKeyCode;
+import org.abstractj.cuckootp.api.Base32;
 import org.jboss.aerogear.security.idm.AuthenticationKeyProvider;
-import org.jboss.aerogear.security.util.Hex;
 import org.picketbox.cdi.PicketBoxIdentity;
 import org.picketbox.core.UserContext;
-import org.picketbox.core.util.Base32;
 import org.picketlink.idm.IdentityManager;
 import org.picketlink.idm.model.User;
 
@@ -46,16 +44,12 @@ public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider 
         return context.getSession().getId().getId().toString();
     }
 
-    public String getB32() {
-        return Base32.encode(Hex.toAscii(getSecret()).getBytes());
-    }
-
     public String getSecret() {
 
         String secret = user.getAttribute(IDM_SECRET_ATTRIBUTE);
 
         if (secret == null) {
-            secret = AuthenticationSecretKeyCode.create();
+            secret = new Base32().random();
             context.getUser().setAttribute(IDM_SECRET_ATTRIBUTE, secret);
         }
         return secret;

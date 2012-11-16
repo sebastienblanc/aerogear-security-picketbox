@@ -24,11 +24,6 @@ import org.picketlink.idm.jpa.schema.internal.JPATemplate;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 
-/**
- * <p>Bean responsible for producing the {@link CDIConfigurationBuilder}.</p>
- *
- * @author <a href="mailto:psilva@redhat.com">Pedro Silva</a>
- */
 public class PicketBoxConfigurer {
 
     public static final int TIMEOUT_IN_MINUTES = 30;
@@ -43,7 +38,7 @@ public class PicketBoxConfigurer {
     public ConfigurationBuilder produceConfiguration() {
         ConfigurationBuilder builder = new ConfigurationBuilder();
 
-        builder.authentication().mechanism(otpAuthenticationMechanism);
+        builder.authentication();
 
         builder
                 .identityManager()

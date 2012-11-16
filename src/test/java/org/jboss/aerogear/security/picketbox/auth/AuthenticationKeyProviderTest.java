@@ -85,11 +85,4 @@ public class AuthenticationKeyProviderTest {
         when(identity.isLoggedIn()).thenReturn(true);
         assertEquals("mySessionId", keyProvider.getToken());
     }
-
-    @Test
-    public void testGetBase32() throws Exception {
-        String secret = "32626635656566396334";
-        when(user.getAttribute("serial")).thenReturn(secret);
-        assertEquals(16, keyProvider.getB32().length());
-    }
 }
