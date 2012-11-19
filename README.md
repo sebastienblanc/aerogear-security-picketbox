@@ -5,7 +5,7 @@
         <dependency>
              <groupId>org.jboss.aerogear</groupId>
              <artifactId>aerogear-security-picketbox</artifactId>
-             <version>1.0.0.M1-20121107</version>
+             <version>1.0.0.M1-20121107-SNAPSHOT</version>
              <scope>compile</scope>
         </dependency>
 
