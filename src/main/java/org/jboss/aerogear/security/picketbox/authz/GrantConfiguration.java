@@ -33,6 +33,8 @@ import java.util.List;
 @ApplicationScoped
 public class GrantConfiguration implements IdentityManagement.GrantMethods {
 
+    public static final String USERS_GROUP = "Default Users Group";
+
     @Inject
     private IdentityManager identityManager;
 
@@ -47,11 +49,6 @@ public class GrantConfiguration implements IdentityManagement.GrantMethods {
         return this;
     }
 
-    /**
-     * Passing null here because the api doesn't allows me to have user without a group
-     *
-     * @param user
-     */
     @Override
     public void to(AeroGearUser user) {
 
@@ -60,7 +57,7 @@ public class GrantConfiguration implements IdentityManagement.GrantMethods {
         picketLinkUser.setFirstName(user.getFirstName());
         picketLinkUser.setLastName(user.getLastName());
 
-        Group usersGroup = identityManager.createGroup("Users Group");
+        Group usersGroup = identityManager.createGroup(USERS_GROUP);
         identityManager.updateCredential(picketLinkUser, new PasswordCredential(user.getPassword()));
 
         for (Role role : list) {
