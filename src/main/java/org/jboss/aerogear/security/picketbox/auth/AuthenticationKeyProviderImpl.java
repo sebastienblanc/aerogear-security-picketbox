@@ -17,8 +17,8 @@
 
 package org.jboss.aerogear.security.picketbox.auth;
 
-import org.abstractj.cuckootp.api.Base32;
 import org.jboss.aerogear.security.idm.AuthenticationKeyProvider;
+import org.jboss.aerogear.security.otp.api.Base32;
 import org.picketbox.cdi.PicketBoxIdentity;
 import org.picketlink.idm.IdentityManager;
 import org.picketlink.idm.credential.PasswordCredential;
@@ -54,7 +54,7 @@ public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider 
         LOGGER.info("Is there a secret? " + secret);
 
         if (secret == null) {
-            secret = new Base32().random();
+            secret = Base32.random();
             user.setAttribute(IDM_SECRET_ATTRIBUTE, secret);
             identityManager.updateCredential(user, new PasswordCredential("123"));
         }
