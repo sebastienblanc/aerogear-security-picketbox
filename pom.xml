@@ -56,7 +56,14 @@
         <!-- Define the version of JBoss' Java EE 6 APIs we want to import. Any dependencies from org.jboss.spec will have their
              version defined by this BOM -->
         <javaee6.bom.version>1.0.0.Final</javaee6.bom.version>
+
+        <!-- Define the version of PicketBox APIs we want to import -->
         <picketbox.cdi.version>5.0.0-2012Nov21</picketbox.cdi.version>
+
+        <!-- Define the version of AeroGear APIs we want to import -->
+        <aerogear.controller.version>1.0.0.M1-20121123-SNAPSHOT</aerogear.controller.version>
+        <aerogear.security.version>1.0.0.M1-20121107-SNAPSHOT</aerogear.security.version>
+        <aerogear.otp.version>1.0.0.M1-20121116-SNAPSHOT</aerogear.otp.version>
     </properties>
 
     <!-- <repositories>
@@ -186,23 +193,30 @@
     <dependencies>
 
         <dependency>
-            <groupId>org.picketbox</groupId>
-            <artifactId>picketbox-cdi</artifactId>
-            <version>${picketbox.cdi.version}</version>
+            <groupId>org.jboss.aerogear</groupId>
+            <artifactId>aerogear-controller</artifactId>
+            <version>${aerogear.controller.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.aerogear</groupId>
             <artifactId>aerogear-security</artifactId>
-            <version>1.0.0.M1-20121107-SNAPSHOT</version>
+            <version>${aerogear.security.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.aerogear</groupId>
-            <artifactId>aerogear-controller</artifactId>
-            <version>1.0.0.M1-20121115-SNAPSHOT</version>
-            <scope>test</scope>
+            <artifactId>aerogear-otp-java</artifactId>
+            <version>${aerogear.otp.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.picketbox</groupId>
+            <artifactId>picketbox-cdi</artifactId>
+            <version>${picketbox.cdi.version}</version>
         </dependency>
 
         <dependency>
