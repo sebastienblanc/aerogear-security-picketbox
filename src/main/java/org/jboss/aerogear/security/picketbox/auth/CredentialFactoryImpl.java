@@ -19,7 +19,6 @@ package org.jboss.aerogear.security.picketbox.auth;
 
 import org.jboss.aerogear.security.auth.CredentialFactory;
 import org.jboss.aerogear.security.model.AeroGearUser;
-import org.picketbox.core.authentication.credential.OTPCredential;
 import org.picketbox.core.authentication.credential.UsernamePasswordCredential;
 import org.picketlink.credential.LoginCredentials;
 
@@ -29,10 +28,6 @@ public class CredentialFactoryImpl implements CredentialFactory {
 
     @Inject
     private LoginCredentials loginCredentials;
-
-    public void setOtpCredential(AeroGearUser user) {
-        loginCredentials.setCredential(new OTPCredential(user.getId(), user.getPassword(), user.getOtp()));
-    }
 
     @Override
     public void setCredential(AeroGearUser user) {

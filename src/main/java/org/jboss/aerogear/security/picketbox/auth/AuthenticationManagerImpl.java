@@ -46,6 +46,7 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
         if (!identity.isLoggedIn())
             throw new AeroGearSecurityException(HttpStatus.AUTHENTICATION_FAILED);
 
+
         return true;
 
     }
@@ -55,4 +56,11 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
             identity.logout();
         }
     }
+
+//    @ApplicationScoped
+//    @Produces
+//    @Token
+//    public String getToken() {
+//        return identity.getUserContext().getUser().getId();
+//    }
 }

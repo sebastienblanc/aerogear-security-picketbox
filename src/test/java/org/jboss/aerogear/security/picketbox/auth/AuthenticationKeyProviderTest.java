@@ -18,6 +18,7 @@
 package org.jboss.aerogear.security.picketbox.auth;
 
 import org.jboss.aerogear.security.idm.AuthenticationKeyProvider;
+import org.jboss.aerogear.security.picketbox.idm.AuthenticationKeyProviderImpl;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -65,7 +66,7 @@ public class AuthenticationKeyProviderTest {
         when(picketBoxSession.getId()).thenReturn(sessionId);
         when(userContext.getSession()).thenReturn(picketBoxSession);
         when(identity.getUserContext()).thenReturn(userContext);
-        keyProvider = new AuthenticationKeyProviderImpl(identityManager, identity);
+        keyProvider = new AuthenticationKeyProviderImpl();
     }
 
     @Test
@@ -84,12 +85,5 @@ public class AuthenticationKeyProviderTest {
     public void testGetToken() throws Exception {
         when(identity.isLoggedIn()).thenReturn(true);
         assertEquals("mySessionId", keyProvider.getToken());
-    }
-
-    @Test
-    public void testGetBase32() throws Exception {
-        String secret = "32626635656566396334";
-        when(user.getAttribute("serial")).thenReturn(secret);
-        assertEquals(16, keyProvider.getB32().length());
     }
 }

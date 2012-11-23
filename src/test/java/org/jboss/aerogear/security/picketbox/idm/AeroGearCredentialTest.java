@@ -17,7 +17,7 @@
 
 package org.jboss.aerogear.security.picketbox.idm;
 
-import org.jboss.aerogear.security.idm.AeroGearPrincipal;
+import org.jboss.aerogear.security.idm.AeroGearCredential;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -31,12 +31,11 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
-public class AeroGearPrincipalTest {
+public class AeroGearCredentialTest {
 
     @Mock
     private PicketBoxIdentity identity;
@@ -45,11 +44,11 @@ public class AeroGearPrincipalTest {
     private UserContext userContext;
 
     @InjectMocks
-    private AeroGearPrincipal aeroGearPrincipal;
+    private AeroGearCredentialImpl aeroGearCredential;
 
     @Before
     public void setUp() {
-        aeroGearPrincipal = new AeroGearPrincipalImpl();
+        aeroGearCredential = new AeroGearCredentialImpl();
         MockitoAnnotations.initMocks(this);
         Collection<String> roleNames = Arrays.asList("manager", "developer");
         when(userContext.getRoleNames()).thenReturn(roleNames);
@@ -61,17 +60,12 @@ public class AeroGearPrincipalTest {
     @Test
     public void testHasRoles() throws Exception {
         Set<String> roles = new HashSet<String>(Arrays.asList("manager", "developer"));
-        assertTrue(aeroGearPrincipal.hasRoles(roles));
+        assertTrue(aeroGearCredential.hasRoles(roles));
     }
 
     @Test
     public void testRoleNotFound() throws Exception {
         Set<String> roles = new HashSet<String>(Arrays.asList("guest"));
-        assertFalse(aeroGearPrincipal.hasRoles(roles));
-    }
-
-    @Test
-    public void testGetRoles() throws Exception {
-        assertEquals(2, aeroGearPrincipal.getRoles().size());
+        assertFalse(aeroGearCredential.hasRoles(roles));
     }
 }

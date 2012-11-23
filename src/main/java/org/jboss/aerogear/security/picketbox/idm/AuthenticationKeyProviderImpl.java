@@ -15,48 +15,52 @@
  * limitations under the License.
  */
 
-package org.jboss.aerogear.security.picketbox.auth;
+package org.jboss.aerogear.security.picketbox.idm;
 
-import org.jboss.aerogear.security.auth.AuthenticationSecretKeyCode;
+import org.jboss.aerogear.security.auth.Secret;
+import org.jboss.aerogear.security.auth.Token;
 import org.jboss.aerogear.security.idm.AuthenticationKeyProvider;
-import org.jboss.aerogear.security.util.Hex;
+import org.jboss.aerogear.security.otp.api.Base32;
 import org.picketbox.cdi.PicketBoxIdentity;
-import org.picketbox.core.UserContext;
-import org.picketbox.core.util.Base32;
 import org.picketlink.idm.IdentityManager;
+import org.picketlink.idm.credential.PasswordCredential;
 import org.picketlink.idm.model.User;
 
+import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 
 public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider {
 
     private static final String IDM_SECRET_ATTRIBUTE = "serial";
-    private User user;
-    private UserContext context;
 
     @Inject
-    public AuthenticationKeyProviderImpl(IdentityManager identityManager, PicketBoxIdentity identity) {
-        if (identity.isLoggedIn()) {
-            context = identity.getUserContext();
-            user = identityManager.getUser(context.getUser().getId());
-        }
-    }
+    private IdentityManager identityManager;
 
+    @Inject
+    private PicketBoxIdentity identity;
+
+    @Produces
+    @Token
     public String getToken() {
-        return context.getSession().getId().getId().toString();
+        String id = null;
+        if (identity.isLoggedIn()) {
+            id = identity.getUserContext().getSession().getId().getId().toString();
+        }
+        return id;
     }
 
-    public String getB32() {
-        return Base32.encode(Hex.toAscii(getSecret()).getBytes());
-    }
-
+    @Produces
+    @Secret
     public String getSecret() {
+
+        User user = identity.getUserContext().getUser();
 
         String secret = user.getAttribute(IDM_SECRET_ATTRIBUTE);
 
         if (secret == null) {
-            secret = AuthenticationSecretKeyCode.create();
-            context.getUser().setAttribute(IDM_SECRET_ATTRIBUTE, secret);
+            secret = Base32.random();
+            user.setAttribute(IDM_SECRET_ATTRIBUTE, secret);
+            identityManager.updateCredential(user, new PasswordCredential("123"));
         }
         return secret;
     }
