@@ -33,7 +33,6 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
     @Inject
     private PicketBoxIdentity identity;
 
-    //TODO
     @Inject
     private CredentialFactory credentialFactory;
 
@@ -43,24 +42,22 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 
         identity.login();
 
-        if (!identity.isLoggedIn())
-            throw new AeroGearSecurityException(HttpStatus.AUTHENTICATION_FAILED);
-
+        onAuthenticationFailure();
 
         return true;
 
     }
 
     public void logout() {
-        if (identity.isLoggedIn()) {
-            identity.logout();
-        }
+        onAuthenticationFailure();
+
+        identity.logout();
     }
 
-//    @ApplicationScoped
-//    @Produces
-//    @Token
-//    public String getToken() {
-//        return identity.getUserContext().getUser().getId();
-//    }
+    //TODO figure out a best place to put this method
+    private void onAuthenticationFailure() {
+        if (!identity.isLoggedIn())
+            throw new AeroGearSecurityException(HttpStatus.AUTHENTICATION_FAILED);
+    }
+
 }
