@@ -17,6 +17,8 @@
 
 package org.jboss.aerogear.security.picketbox.idm;
 
+import org.jboss.aerogear.security.auth.Secret;
+import org.jboss.aerogear.security.auth.Token;
 import org.jboss.aerogear.security.idm.AuthenticationKeyProvider;
 import org.jboss.aerogear.security.otp.api.Base32;
 import org.picketbox.cdi.PicketBoxIdentity;
@@ -24,6 +26,7 @@ import org.picketlink.idm.IdentityManager;
 import org.picketlink.idm.credential.PasswordCredential;
 import org.picketlink.idm.model.User;
 
+import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import java.util.logging.Logger;
 
@@ -40,10 +43,18 @@ public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider 
     private static final Logger LOGGER = Logger.getLogger(AuthenticationKeyProviderImpl.class.getName());
 
 
+    @Produces
+    @Token
     public String getToken() {
-        return identity.getUserContext().getSession().getId().getId().toString();
+        String id = null;
+        if (identity.isLoggedIn()) {
+            id = identity.getUserContext().getSession().getId().getId().toString();
+        }
+        return id;
     }
 
+    @Produces
+    @Secret
     public String getSecret() {
 
         User user = identity.getUserContext().getUser();
