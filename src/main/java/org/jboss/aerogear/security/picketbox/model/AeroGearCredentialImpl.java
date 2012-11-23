@@ -34,10 +34,13 @@ public class AeroGearCredentialImpl implements AeroGearCredential {
 
     @Inject
     public AeroGearCredentialImpl(AuthenticationKeyProvider provider, AeroGearPrincipal principal, PicketBoxIdentity identity) {
-        this.id = identity.getUserContext().getUser().getId();
-        this.secret = provider.getSecret();
-        this.token = provider.getToken();
-        this.roles = principal.getRoles();
+
+        if (identity.isLoggedIn()) {
+            this.id = identity.getUserContext().getUser().getId();
+            this.secret = provider.getSecret();
+            this.token = provider.getToken();
+            this.roles = principal.getRoles();
+        }
     }
 
     public String getId() {
