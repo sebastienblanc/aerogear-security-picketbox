@@ -26,7 +26,6 @@ import org.picketbox.cdi.PicketBoxIdentity;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.util.logging.Logger;
 
 @ApplicationScoped
 public class AuthenticationManagerImpl implements AuthenticationManager {
@@ -38,8 +37,6 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
     @Inject
     private CredentialFactory credentialFactory;
 
-    private static final Logger LOGGER = Logger.getLogger(AuthenticationManagerImpl.class.getName());
-
     public boolean login(AeroGearUser aeroGearUser) {
 
         credentialFactory.setCredential(aeroGearUser);
@@ -49,9 +46,6 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
         if (!identity.isLoggedIn())
             throw new AeroGearSecurityException(HttpStatus.AUTHENTICATION_FAILED);
 
-
-        LOGGER.info("IS LOGGED IN: " + identity.isLoggedIn());
-        LOGGER.info("IS LOGGED IN: " + identity.getUserContext().getUser().getId());
 
         return true;
 

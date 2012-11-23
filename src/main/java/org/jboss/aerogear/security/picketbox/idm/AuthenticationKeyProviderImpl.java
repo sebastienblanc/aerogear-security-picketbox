@@ -28,7 +28,6 @@ import org.picketlink.idm.model.User;
 
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
-import java.util.logging.Logger;
 
 public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider {
 
@@ -39,9 +38,6 @@ public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider 
 
     @Inject
     private PicketBoxIdentity identity;
-
-    private static final Logger LOGGER = Logger.getLogger(AuthenticationKeyProviderImpl.class.getName());
-
 
     @Produces
     @Token
@@ -60,9 +56,6 @@ public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider 
         User user = identity.getUserContext().getUser();
 
         String secret = user.getAttribute(IDM_SECRET_ATTRIBUTE);
-
-        LOGGER.info("Is there a user? " + user.getId());
-        LOGGER.info("Is there a secret? " + secret);
 
         if (secret == null) {
             secret = Base32.random();

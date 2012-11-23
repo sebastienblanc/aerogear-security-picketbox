@@ -19,7 +19,6 @@ package org.jboss.aerogear.security.picketbox.authz;
 
 
 import org.jboss.aerogear.security.authz.IdentityManagement;
-import org.jboss.aerogear.security.idm.AeroGearCredential;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -30,15 +29,8 @@ public class IdentityManagementImpl implements IdentityManagement {
     @Inject
     private GrantConfiguration grantConfiguration;
 
-    @Inject
-    private AeroGearCredential aeroGearCredential;
-
     @Override
     public GrantMethods grant(String... roles) {
         return grantConfiguration.roles(roles);
-    }
-
-    public AeroGearCredential getCredentials(){
-        return aeroGearCredential;
     }
 }
