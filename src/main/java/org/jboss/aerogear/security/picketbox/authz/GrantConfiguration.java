@@ -33,7 +33,7 @@ import java.util.List;
 @ApplicationScoped
 public class GrantConfiguration implements IdentityManagement.GrantMethods {
 
-    public static final String USERS_GROUP = "Default Users Group";
+    private static final String USERS_GROUP = "Default Users Group";
 
     @Inject
     private IdentityManager identityManager;

@@ -26,7 +26,7 @@ import javax.inject.Inject;
 
 public class PicketBoxConfigurer {
 
-    public static final int TIMEOUT_IN_MINUTES = 30;
+    private static final int TIMEOUT_IN_MINUTES = 30;
 
     @Inject
     private JPATemplate jpaTemplate;
