@@ -24,14 +24,21 @@ import org.picketbox.cdi.PicketBoxIdentity;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import java.util.Set;
-import java.util.logging.Logger;
 
 public class AeroGearCredentialImpl implements AeroGearCredential {
 
-    private static final Logger LOGGER = Logger.getLogger(AeroGearCredentialImpl.class.getName());
-
     @Inject
     private PicketBoxIdentity identity;
+
+    @Produces
+    @LoggedUser
+    public String getId() {
+        String id = null;
+        if (identity.isLoggedIn()) {
+            id = identity.getUserContext().getUser().getId();
+        }
+        return id;
+    }
 
     @Override
     public boolean hasRoles(Set<String> roles) {
@@ -44,15 +51,4 @@ public class AeroGearCredentialImpl implements AeroGearCredential {
 
         return hasRoles;
     }
-
-    @Produces
-    @LoggedUser
-    public String getId() {
-        String id = null;
-        if (identity.isLoggedIn()) {
-            id = identity.getUserContext().getUser().getId();
-        }
-        return id;
-    }
-
 }
