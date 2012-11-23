@@ -18,6 +18,7 @@
 package org.jboss.aerogear.security.picketbox.auth;
 
 import org.jboss.aerogear.security.idm.AuthenticationKeyProvider;
+import org.jboss.aerogear.security.picketbox.idm.AuthenticationKeyProviderImpl;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;

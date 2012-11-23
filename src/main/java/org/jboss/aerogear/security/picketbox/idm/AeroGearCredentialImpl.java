@@ -17,14 +17,16 @@
 
 package org.jboss.aerogear.security.picketbox.idm;
 
-import org.jboss.aerogear.security.idm.AeroGearPrincipal;
+import org.jboss.aerogear.security.idm.AeroGearCredential;
 import org.picketbox.cdi.PicketBoxIdentity;
 
 import javax.inject.Inject;
-import java.util.Collection;
 import java.util.Set;
+import java.util.logging.Logger;
 
-public class AeroGearPrincipalImpl implements AeroGearPrincipal {
+public class AeroGearCredentialImpl implements AeroGearCredential {
+
+    private static final Logger LOGGER = Logger.getLogger(AeroGearCredentialImpl.class.getName());
 
     @Inject
     private PicketBoxIdentity identity;
@@ -41,8 +43,12 @@ public class AeroGearPrincipalImpl implements AeroGearPrincipal {
         return hasRoles;
     }
 
-    @Override
-    public Collection<String> getRoles() {
-        return identity.getUserContext().getRoleNames();
+    public String getId() {
+        String id = null;
+        if (identity.isLoggedIn()) {
+            id = identity.getUserContext().getUser().getId();
+        }
+        return id;
     }
+
 }

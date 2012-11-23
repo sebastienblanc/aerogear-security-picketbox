@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.jboss.aerogear.security.picketbox.auth;
+package org.jboss.aerogear.security.picketbox.idm;
 
 import org.jboss.aerogear.security.idm.AuthenticationKeyProvider;
 import org.jboss.aerogear.security.otp.api.Base32;
