@@ -60,7 +60,7 @@ public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider 
         if (secret == null) {
             secret = Base32.random();
             user.setAttribute(IDM_SECRET_ATTRIBUTE, secret);
-            identityManager.updateCredential(user, new PasswordCredential("123"));
+            identityManager.updateCredential(user, identity.getUserContext().getCredential());
         }
         return secret;
     }
