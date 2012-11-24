@@ -22,8 +22,6 @@ import org.jboss.aerogear.security.auth.Token;
 import org.jboss.aerogear.security.idm.AuthenticationKeyProvider;
 import org.jboss.aerogear.security.otp.api.Base32;
 import org.picketbox.cdi.PicketBoxIdentity;
-import org.picketlink.idm.IdentityManager;
-import org.picketlink.idm.credential.PasswordCredential;
 import org.picketlink.idm.model.User;
 
 import javax.enterprise.inject.Produces;
@@ -32,9 +30,6 @@ import javax.inject.Inject;
 public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider {
 
     private static final String IDM_SECRET_ATTRIBUTE = "serial";
-
-    @Inject
-    private IdentityManager identityManager;
 
     @Inject
     private PicketBoxIdentity identity;
@@ -60,7 +55,6 @@ public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider 
         if (secret == null) {
             secret = Base32.random();
             user.setAttribute(IDM_SECRET_ATTRIBUTE, secret);
-            identityManager.updateCredential(user, identity.getUserContext().getCredential());
         }
         return secret;
     }
