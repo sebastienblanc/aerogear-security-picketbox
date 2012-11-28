@@ -36,15 +36,13 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
     @Inject
     private CredentialFactory credentialFactory;
 
-    public boolean login(AeroGearUser aeroGearUser) {
+    public void login(AeroGearUser aeroGearUser) {
 
         credentialFactory.setCredential(aeroGearUser);
 
         identity.login();
 
         onAuthenticationFailure();
-
-        return true;
 
     }
 

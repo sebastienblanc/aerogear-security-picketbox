@@ -52,12 +52,6 @@ public class AuthenticationManagerTest {
         when(aeroGearUser.getPassword()).thenReturn("123");
     }
 
-    @Test
-    public void testLogin() throws Exception {
-        when(picketBoxIdentity.isLoggedIn()).thenReturn(true);
-        assertTrue(authenticationManager.login(aeroGearUser));
-    }
-
     @Test(expected = AeroGearSecurityException.class)
     public void testInvalidLogin() throws Exception {
         when(picketBoxIdentity.isLoggedIn()).thenReturn(false);
