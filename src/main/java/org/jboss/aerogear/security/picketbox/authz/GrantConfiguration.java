@@ -50,15 +50,15 @@ public class GrantConfiguration implements IdentityManagement.GrantMethods {
     }
 
     @Override
-    public void to(AeroGearUser user) {
+    public void to(AeroGearUser aeroGearUser) {
 
-        User picketLinkUser = identityManager.createUser(user.getId());
-        picketLinkUser.setEmail(user.getEmail());
-        picketLinkUser.setFirstName(user.getFirstName());
-        picketLinkUser.setLastName(user.getLastName());
+        User picketLinkUser = identityManager.createUser(aeroGearUser.getId());
+        picketLinkUser.setEmail(aeroGearUser.getEmail());
+        picketLinkUser.setFirstName(aeroGearUser.getFirstName());
+        picketLinkUser.setLastName(aeroGearUser.getLastName());
 
         Group usersGroup = identityManager.createGroup(USERS_GROUP);
-        identityManager.updateCredential(picketLinkUser, new PasswordCredential(user.getPassword()));
+        identityManager.updateCredential(picketLinkUser, new PasswordCredential(aeroGearUser.getPassword()));
 
         for (Role role : list) {
             identityManager.grantRole(role, picketLinkUser, usersGroup);

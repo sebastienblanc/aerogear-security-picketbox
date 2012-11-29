@@ -30,7 +30,7 @@ public class CredentialFactoryImpl implements CredentialFactory {
     private LoginCredentials loginCredentials;
 
     @Override
-    public void setCredential(AeroGearUser user) {
-        loginCredentials.setCredential(new UsernamePasswordCredential(user.getId(), user.getPassword()));
+    public void setCredential(AeroGearUser aeroGearUser) {
+        loginCredentials.setCredential(new UsernamePasswordCredential(aeroGearUser.getId(), aeroGearUser.getPassword()));
     }
 }
