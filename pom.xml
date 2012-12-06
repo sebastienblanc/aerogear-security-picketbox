@@ -61,7 +61,7 @@
         <picketbox.cdi.version>5.0.0-2012Nov26</picketbox.cdi.version>
 
         <!-- Define the version of AeroGear APIs we want to import -->
-        <aerogear.controller.version>1.0.0.M1-20121124-SNAPSHOT</aerogear.controller.version>
+        <aerogear.controller.version>1.0.0.M1-20121203-SNAPSHOT</aerogear.controller.version>
         <aerogear.security.version>1.0.0.M1-20121124-SNAPSHOT</aerogear.security.version>
         <aerogear.otp.version>1.0.0.M1-20121124-SNAPSHOT</aerogear.otp.version>
     </properties>
