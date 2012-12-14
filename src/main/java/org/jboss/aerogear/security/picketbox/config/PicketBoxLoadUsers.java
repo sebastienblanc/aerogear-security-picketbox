@@ -37,7 +37,7 @@ import javax.persistence.PersistenceContextType;
 public class PicketBoxLoadUsers {
 
 
-    @PersistenceContext(type = PersistenceContextType.EXTENDED)
+    @PersistenceContext(unitName = "picketbox-default" , type = PersistenceContextType.EXTENDED)
     private EntityManager entityManager;
 
     @Inject
