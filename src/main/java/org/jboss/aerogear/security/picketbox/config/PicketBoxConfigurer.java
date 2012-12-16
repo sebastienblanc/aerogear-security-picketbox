@@ -41,6 +41,10 @@ public class PicketBoxConfigurer {
         builder.authentication();
 
         builder
+                .identityManager()
+                .jpaStore().template(this.jpaTemplate);
+
+        builder
                 .sessionManager()
                 .sessionTimeout(TIMEOUT_IN_MINUTES)
                 .inMemorySessionStore();
