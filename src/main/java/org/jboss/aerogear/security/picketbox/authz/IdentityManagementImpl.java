@@ -23,12 +23,20 @@ import org.jboss.aerogear.security.authz.IdentityManagement;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+/**
+ * <i>IdentityManagement</i> allows to assign a set of roles to {@link org.jboss.aerogear.security.model.AeroGearUser} on Identity Manager provider
+ */
 @ApplicationScoped
 public class IdentityManagementImpl implements IdentityManagement {
 
     @Inject
     private GrantConfiguration grantConfiguration;
 
+    /**
+     * This method allows to specify which <i>roles</i> must be assigned to {@link org.jboss.aerogear.security.model.AeroGearUser}
+     * @param roles The list of roles.
+     * @return {@link GrantMethods} is a builder which a allows to apply a list of roles to the specified {@link org.jboss.aerogear.security.model.AeroGearUser}.
+     */
     @Override
     public GrantMethods grant(String... roles) {
         return grantConfiguration.roles(roles);

@@ -30,6 +30,9 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <i>GrantMethods</i> implementation is a builder to apply roles to {@link AeroGearUser}
+ */
 @ApplicationScoped
 public class GrantConfiguration implements IdentityManagement.GrantMethods {
 
@@ -40,6 +43,11 @@ public class GrantConfiguration implements IdentityManagement.GrantMethods {
 
     private List<Role> list;
 
+    /**
+     * This method specifies which roles will be applied to {@link AeroGearUser}
+     * @param roles Array of roles
+     * @return builder implementation
+     */
     public GrantConfiguration roles(String[] roles) {
         list = new ArrayList<Role>();
         for (String role : roles) {
@@ -49,6 +57,10 @@ public class GrantConfiguration implements IdentityManagement.GrantMethods {
         return this;
     }
 
+    /**
+     * This method applies roles specified on {@link IdentityManagement#grant(String...)}
+     * @param aeroGearUser represents a simple user's implementation to hold credentials.
+     */
     @Override
     public void to(AeroGearUser aeroGearUser) {
 

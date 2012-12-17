@@ -24,11 +24,18 @@ import org.picketlink.credential.LoginCredentials;
 
 import javax.inject.Inject;
 
+/**
+ * Configure credentials on authentication provider
+ */
 public class CredentialFactoryImpl implements CredentialFactory {
 
     @Inject
     private LoginCredentials loginCredentials;
 
+    /**
+     * Sets the identity required on authentication provider.
+     * @param aeroGearUser represents a simple implementation that holds user's credentials.
+     */
     @Override
     public void setCredential(AeroGearUser aeroGearUser) {
         loginCredentials.setCredential(new UsernamePasswordCredential(aeroGearUser.getId(), aeroGearUser.getPassword()));

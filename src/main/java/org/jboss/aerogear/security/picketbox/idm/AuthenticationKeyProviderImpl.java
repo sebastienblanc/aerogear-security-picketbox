@@ -27,6 +27,9 @@ import org.picketlink.idm.model.User;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 
+/**
+ * Authentication key provider
+ */
 public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider {
 
     private static final String IDM_SECRET_ATTRIBUTE = "serial";
@@ -34,6 +37,9 @@ public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider 
     @Inject
     private PicketBoxIdentity identity;
 
+    /**
+     * Represents the generated token for the current {@link org.jboss.aerogear.security.model.AeroGearUser} logged in.
+     */
     @Produces
     @Token
     public String getToken() {
@@ -44,6 +50,9 @@ public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider 
         return id;
     }
 
+    /**
+     * Represents the generated secret for the current {@link org.jboss.aerogear.security.model.AeroGearUser} logged in.
+     */
     @Produces
     @Secret
     public String getSecret() {
