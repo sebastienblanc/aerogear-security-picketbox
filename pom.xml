@@ -23,7 +23,7 @@
 
     <groupId>org.jboss.aerogear</groupId>
     <artifactId>aerogear-security-picketbox</artifactId>
-    <version>1.0.0.M1-20121124-SNAPSHOT</version>
+    <version>1.0.0.M1-20121217-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>AeroGear Security PicketBox</name>
 
@@ -61,18 +61,10 @@
         <picketbox.cdi.version>5.0.0-2012Nov26</picketbox.cdi.version>
 
         <!-- Define the version of AeroGear APIs we want to import -->
-        <aerogear.controller.version>1.0.0.M1-20121203-SNAPSHOT</aerogear.controller.version>
-        <aerogear.security.version>1.0.0.M1-20121124-SNAPSHOT</aerogear.security.version>
-        <aerogear.otp.version>1.0.0.M1-20121124-SNAPSHOT</aerogear.otp.version>
+        <aerogear.controller.version>1.0.0.M1-20121217-SNAPSHOT</aerogear.controller.version>
+        <aerogear.security.version>1.0.0.M1-20121217-SNAPSHOT</aerogear.security.version>
+        <aerogear.otp.version>1.0.0.M1-20121217-SNAPSHOT</aerogear.otp.version>
     </properties>
-
-    <!-- <repositories>
-        <repository>
-            <id>cloudbees-snapshot-repository</id>
-            <name>cloudbees-snapshot-repository</name>
-            <url>http://repository-aerogear.forge.cloudbees.com/snapshot/</url>
-        </repository>
-    </repositories>  -->
 
     <build>
         <plugins>
