@@ -23,11 +23,18 @@
 
     <groupId>org.jboss.aerogear</groupId>
     <artifactId>aerogear-security-picketbox</artifactId>
-    <version>1.0.0.M1-20121218-SNAPSHOT</version>
+    <version>1.0.0.M1</version>
     <packaging>jar</packaging>
-    <name>AeroGear Security PicketBox</name>
 
-    <url>http://jboss.org/jbossas</url>
+    <name>aerogear-security-picketbox</name>
+    <url>http://aerogear.org</url>
+
+    <parent>
+        <groupId>org.jboss</groupId>
+        <artifactId>jboss-parent</artifactId>
+        <version>6-beta-2</version>
+    </parent>
+
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
@@ -38,13 +45,18 @@
 
     <developers>
         <developer>
+            <id>abstractj</id>
             <name>Bruno Oliveira</name>
-            <email>bruno@abstractj.org</email>
-            <organization>Red Hat, Inc.</organization>
-            <organizationUrl>http://redhat.com/jboss</organizationUrl>
             <url>http://abstractj.org</url>
+            <email>bruno@abstractj.org</email>
         </developer>
     </developers>
+
+    <scm>
+        <connection>scm:git:git@github.com:aerogear/aerogear-security-picketbox.git</connection>
+        <developerConnection>scm:git:git@github.com:aerogear/aerogear-security-picketbox.git</developerConnection>
+        <url>git@github.com:aerogear/aerogear-security-picketbox.git</url>
+    </scm>
 
     <properties>
         <!-- Explicitly declaring the source encoding eliminates the following
@@ -61,9 +73,9 @@
         <picketbox.cdi.version>5.0.0-2012Nov26</picketbox.cdi.version>
 
         <!-- Define the version of AeroGear APIs we want to import -->
-        <aerogear.controller.version>1.0.0.M1-20121218-SNAPSHOT</aerogear.controller.version>
-        <aerogear.security.version>1.0.0.M1-20121218-SNAPSHOT</aerogear.security.version>
-        <aerogear.otp.version>1.0.0.M1-20121217-SNAPSHOT</aerogear.otp.version>
+        <aerogear.controller.version>1.0.0.M1</aerogear.controller.version>
+        <aerogear.security.version>1.0.0.M1</aerogear.security.version>
+        <aerogear.otp.version>1.0.0.M1</aerogear.otp.version>
     </properties>
 
     <build>
