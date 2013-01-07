@@ -19,9 +19,10 @@ package org.jboss.aerogear.security.picketbox.config;
 
 import org.picketbox.core.identity.impl.JPAIdentityStoreContext;
 import org.picketlink.idm.IdentityManager;
-import org.picketlink.idm.credential.PasswordCredential;
-import org.picketlink.idm.model.Group;
+import org.picketlink.idm.credential.PlainTextPassword;
 import org.picketlink.idm.model.Role;
+import org.picketlink.idm.model.SimpleRole;
+import org.picketlink.idm.model.SimpleUser;
 import org.picketlink.idm.model.User;
 
 import javax.annotation.PostConstruct;
@@ -51,22 +52,26 @@ public class PicketBoxLoadUsers {
     public void create() {
         JPAIdentityStoreContext.set(this.entityManager);
 
-        User user = this.identityManager.createUser("john");
+        User user = new SimpleUser("john");
 
         user.setEmail("john@doe.com");
         user.setFirstName("John");
         user.setLastName("Doe");
 
+        /*
+         * Disclaimer: PlainTextPassword will encode passwords in SHA-512 with SecureRandom-1024 salt
+         * See http://lists.jboss.org/pipermail/security-dev/2013-January/000650.html for more information
+         */
+        this.identityManager.updateCredential(user, new PlainTextPassword("123"));
 
-        this.identityManager.updateCredential(user, new PasswordCredential("123"));
+        Role roleDeveloper = new SimpleRole("simple");
+        Role roleAdmin = new SimpleRole("admin");
 
-        Role roleDeveloper = this.identityManager.createRole("simple");
-        Role roleAdmin = this.identityManager.createRole("admin");
+        this.identityManager.add(roleDeveloper);
+        this.identityManager.add(roleAdmin);
 
-        Group groupCoreDeveloper = identityManager.createGroup("Core Developers");
-
-        identityManager.grantRole(roleDeveloper, user, groupCoreDeveloper);
-        identityManager.grantRole(roleAdmin, user, groupCoreDeveloper);
+        identityManager.grantRole(user, roleDeveloper);
+        identityManager.grantRole(user, roleAdmin);
 
         JPAIdentityStoreContext.clear();
     }
