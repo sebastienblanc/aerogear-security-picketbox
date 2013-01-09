@@ -17,9 +17,8 @@
 
 package org.jboss.aerogear.security.picketbox.config;
 
-import org.picketbox.core.authentication.impl.OTPAuthenticationMechanism;
+import org.picketbox.cdi.idm.DefaultJPATemplate;
 import org.picketbox.core.config.ConfigurationBuilder;
-import org.picketlink.idm.jpa.schema.internal.JPATemplate;
 
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
@@ -29,10 +28,7 @@ public class PicketBoxConfigurer {
     private static final int TIMEOUT_IN_MINUTES = 30;
 
     @Inject
-    private JPATemplate jpaTemplate;
-
-    @Inject
-    private OTPAuthenticationMechanism otpAuthenticationMechanism;
+    private DefaultJPATemplate jpaTemplate;
 
     @Produces
     public ConfigurationBuilder produceConfiguration() {

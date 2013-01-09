@@ -38,7 +38,7 @@ import javax.persistence.PersistenceContextType;
 public class PicketBoxLoadUsers {
 
 
-    @PersistenceContext(type = PersistenceContextType.EXTENDED)
+    @PersistenceContext(unitName = "picketbox-default", type = PersistenceContextType.EXTENDED)
     private EntityManager entityManager;
 
     @Inject
@@ -62,6 +62,7 @@ public class PicketBoxLoadUsers {
          * Disclaimer: PlainTextPassword will encode passwords in SHA-512 with SecureRandom-1024 salt
          * See http://lists.jboss.org/pipermail/security-dev/2013-January/000650.html for more information
          */
+        this.identityManager.add(user);
         this.identityManager.updateCredential(user, new PlainTextPassword("123"));
 
         Role roleDeveloper = new SimpleRole("simple");
