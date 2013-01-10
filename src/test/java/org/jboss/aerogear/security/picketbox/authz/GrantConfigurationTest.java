@@ -24,6 +24,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.picketlink.idm.IdentityManager;
+import org.picketlink.idm.model.SimpleUser;
 import org.picketlink.idm.model.User;
 
 import static org.mockito.Mockito.when;
@@ -57,7 +58,6 @@ public class GrantConfigurationTest {
     public void testGrant() throws Exception {
         AeroGearUser aeroGearUser = buildUser("john");
         String[] role = new String[]{"ADMIN"};
-        when(manager.createUser("john")).thenReturn(user);
         grantConfiguration.roles(role).to(aeroGearUser);
     }
 }

@@ -19,14 +19,17 @@ package org.jboss.aerogear.security.picketbox.authz;
 
 import org.jboss.aerogear.security.authz.IdentityManagement;
 import org.jboss.aerogear.security.model.AeroGearUser;
+import org.picketbox.core.authentication.credential.UsernamePasswordCredential;
 import org.picketlink.idm.IdentityManager;
-import org.picketlink.idm.credential.PasswordCredential;
-import org.picketlink.idm.model.Group;
+import org.picketlink.idm.credential.PlainTextPassword;
 import org.picketlink.idm.model.Role;
+import org.picketlink.idm.model.SimpleRole;
+import org.picketlink.idm.model.SimpleUser;
 import org.picketlink.idm.model.User;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.resource.spi.security.PasswordCredential;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,8 +38,6 @@ import java.util.List;
  */
 @ApplicationScoped
 public class GrantConfiguration implements IdentityManagement.GrantMethods {
-
-    private static final String USERS_GROUP = "Default Users Group";
 
     @Inject
     private IdentityManager identityManager;
@@ -51,7 +52,8 @@ public class GrantConfiguration implements IdentityManagement.GrantMethods {
     public GrantConfiguration roles(String[] roles) {
         list = new ArrayList<Role>();
         for (String role : roles) {
-            Role newRole = identityManager.createRole(role);
+            Role newRole = new SimpleRole(role);
+            identityManager.add(newRole);
             list.add(newRole);
         }
         return this;
@@ -64,16 +66,19 @@ public class GrantConfiguration implements IdentityManagement.GrantMethods {
     @Override
     public void to(AeroGearUser aeroGearUser) {
 
-        User picketLinkUser = identityManager.createUser(aeroGearUser.getId());
+        User picketLinkUser = new SimpleUser(aeroGearUser.getId());
         picketLinkUser.setEmail(aeroGearUser.getEmail());
         picketLinkUser.setFirstName(aeroGearUser.getFirstName());
         picketLinkUser.setLastName(aeroGearUser.getLastName());
 
-        Group usersGroup = identityManager.createGroup(USERS_GROUP);
-        identityManager.updateCredential(picketLinkUser, new PasswordCredential(aeroGearUser.getPassword()));
+        /*
+         * Disclaimer: PlainTextPassword will encode passwords in SHA-512 with SecureRandom-1024 salt
+         * See http://lists.jboss.org/pipermail/security-dev/2013-January/000650.html for more information
+         */
+        identityManager.updateCredential(picketLinkUser, new PlainTextPassword(aeroGearUser.getPassword()));
 
         for (Role role : list) {
-            identityManager.grantRole(role, picketLinkUser, usersGroup);
+            identityManager.grantRole(picketLinkUser, role);
         }
 
     }

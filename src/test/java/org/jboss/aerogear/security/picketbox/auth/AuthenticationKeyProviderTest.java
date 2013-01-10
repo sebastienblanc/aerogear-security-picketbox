@@ -18,6 +18,7 @@
 package org.jboss.aerogear.security.picketbox.auth;
 
 import org.jboss.aerogear.security.idm.AuthenticationKeyProvider;
+import org.jboss.aerogear.security.otp.api.Base32;
 import org.jboss.aerogear.security.picketbox.idm.AuthenticationKeyProviderImpl;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -30,6 +31,7 @@ import org.picketbox.core.UserContext;
 import org.picketbox.core.session.PicketBoxSession;
 import org.picketbox.core.session.SessionId;
 import org.picketlink.idm.IdentityManager;
+import org.picketlink.idm.model.Attribute;
 import org.picketlink.idm.model.User;
 
 import static org.junit.Assert.assertEquals;
@@ -59,6 +61,8 @@ public class AuthenticationKeyProviderTest {
     @InjectMocks
     private AuthenticationKeyProvider keyProvider;
 
+    private static final String IDM_SECRET_ATTRIBUTE = "serial";
+
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
@@ -71,7 +75,7 @@ public class AuthenticationKeyProviderTest {
 
     @Test
     public void testGetAlreadyExistingSecret() throws Exception {
-        String secret = "32626635656566396334";
+        Attribute secret = new Attribute(IDM_SECRET_ATTRIBUTE, "32626635656566396334");
         when(user.getAttribute("serial")).thenReturn(secret);
         assertEquals(secret, keyProvider.getSecret());
     }

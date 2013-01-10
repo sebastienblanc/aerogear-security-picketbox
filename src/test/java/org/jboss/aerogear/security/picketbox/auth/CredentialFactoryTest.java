@@ -24,12 +24,12 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.picketlink.credential.LoginCredentials;
+import org.picketbox.cdi.LoginCredential;
 
 public class CredentialFactoryTest {
 
     @Mock
-    private LoginCredentials loginCredentials;
+    private LoginCredential loginCredentials;
 
     @InjectMocks
     private CredentialFactoryImpl credentialFactory;
