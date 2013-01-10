@@ -52,8 +52,11 @@ public class GrantConfiguration implements IdentityManagement.GrantMethods {
     public GrantConfiguration roles(String[] roles) {
         list = new ArrayList<Role>();
         for (String role : roles) {
-            Role newRole = new SimpleRole(role);
-            identityManager.add(newRole);
+            Role newRole = identityManager.getRole(role);
+            if(newRole == null){
+                newRole = new SimpleRole(role);
+                identityManager.add(newRole);
+            }
             list.add(newRole);
         }
         return this;
@@ -66,10 +69,7 @@ public class GrantConfiguration implements IdentityManagement.GrantMethods {
     @Override
     public void to(AeroGearUser aeroGearUser) {
 
-        User picketLinkUser = new SimpleUser(aeroGearUser.getId());
-        picketLinkUser.setEmail(aeroGearUser.getEmail());
-        picketLinkUser.setFirstName(aeroGearUser.getFirstName());
-        picketLinkUser.setLastName(aeroGearUser.getLastName());
+        User picketLinkUser = identityManager.getUser(aeroGearUser.getId());
 
         /*
          * Disclaimer: PlainTextPassword will encode passwords in SHA-512 with SecureRandom-1024 salt

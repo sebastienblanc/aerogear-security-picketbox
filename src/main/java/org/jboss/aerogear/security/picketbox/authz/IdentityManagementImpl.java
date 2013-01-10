@@ -19,6 +19,10 @@ package org.jboss.aerogear.security.picketbox.authz;
 
 
 import org.jboss.aerogear.security.authz.IdentityManagement;
+import org.jboss.aerogear.security.model.AeroGearUser;
+import org.picketlink.idm.IdentityManager;
+import org.picketlink.idm.model.SimpleUser;
+import org.picketlink.idm.model.User;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -28,6 +32,9 @@ import javax.inject.Inject;
  */
 @ApplicationScoped
 public class IdentityManagementImpl implements IdentityManagement {
+
+    @Inject
+    private IdentityManager identityManager;
 
     @Inject
     private GrantConfiguration grantConfiguration;
@@ -40,5 +47,18 @@ public class IdentityManagementImpl implements IdentityManagement {
     @Override
     public GrantMethods grant(String... roles) {
         return grantConfiguration.roles(roles);
+    }
+
+    /**
+     * This method creates a new {@link AeroGearUser}
+     * @param aeroGearUser
+     */
+    @Override
+    public void create(AeroGearUser aeroGearUser) {
+        User picketLinkUser = new SimpleUser(aeroGearUser.getId());
+        picketLinkUser.setEmail(aeroGearUser.getEmail());
+        picketLinkUser.setFirstName(aeroGearUser.getFirstName());
+        picketLinkUser.setLastName(aeroGearUser.getLastName());
+        identityManager.add(picketLinkUser);
     }
 }
