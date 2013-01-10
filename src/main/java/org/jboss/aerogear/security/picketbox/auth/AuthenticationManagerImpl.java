@@ -27,6 +27,9 @@ import org.picketbox.cdi.PicketBoxIdentity;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+/**
+ * A <i>AuthenticationManager</i> implementation executes the basic authentication operations for {@link AeroGearUser}
+ */
 @ApplicationScoped
 public class AuthenticationManagerImpl implements AuthenticationManager {
 
@@ -36,6 +39,11 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
     @Inject
     private CredentialFactory credentialFactory;
 
+    /**
+     * Logs in the specified {@link AeroGearUser}.
+     * @param aeroGearUser represents a simple implementation that holds user's credentials.
+     * @throws org.jboss.aerogear.security.exception.AeroGearSecurityException on login failure.
+     */
     public void login(AeroGearUser aeroGearUser) {
 
         credentialFactory.setCredential(aeroGearUser);
@@ -46,6 +54,10 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 
     }
 
+    /**
+     * Logs out the specified {@link AeroGearUser} from the system.
+     * @throws org.jboss.aerogear.security.exception.AeroGearSecurityException on logout failure.
+     */
     public void logout() {
         onAuthenticationFailure();
 

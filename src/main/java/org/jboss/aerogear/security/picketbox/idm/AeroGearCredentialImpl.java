@@ -25,11 +25,17 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import java.util.Set;
 
+/**
+ * Represents the current logged in Credential
+ */
 public class AeroGearCredentialImpl implements AeroGearCredential {
 
     @Inject
     private PicketBoxIdentity identity;
 
+    /**
+     * Represents the current {@link org.jboss.aerogear.security.model.AeroGearUser} logged in.
+     */
     @Produces
     @LoggedUser
     public String getId() {
@@ -40,6 +46,11 @@ public class AeroGearCredentialImpl implements AeroGearCredential {
         return id;
     }
 
+    /**
+     * Role validation against the IDM
+     * @param roles roles to be checked
+     * @return returns true if the current logged in has roles at the IDM, false otherwise
+     */
     @Override
     public boolean hasRoles(Set<String> roles) {
 

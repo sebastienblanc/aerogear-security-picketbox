@@ -23,11 +23,19 @@ import org.picketlink.authentication.AuthenticationException;
 
 import javax.inject.Inject;
 
+/**
+ *  User authorization based on the submitted <i>token</i>
+ */
 public class AuthorizationManagerImpl implements AuthorizationManager {
 
     @Inject
     private PicketBoxIdentity identity;
 
+    /**
+     * Token validation against authorization provider
+     * @param token the generated token for the current {@link org.jboss.aerogear.security.model.AeroGearUser} logged in.
+     * @return true if the <i>token</i> is valid
+     */
     @Override
     public boolean validate(String token) {
 

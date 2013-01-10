@@ -22,11 +22,15 @@ import org.jboss.aerogear.security.auth.Token;
 import org.jboss.aerogear.security.idm.AuthenticationKeyProvider;
 import org.jboss.aerogear.security.otp.api.Base32;
 import org.picketbox.cdi.PicketBoxIdentity;
+import org.picketlink.idm.model.Attribute;
 import org.picketlink.idm.model.User;
 
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 
+/**
+ * Authentication key provider
+ */
 public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider {
 
     private static final String IDM_SECRET_ATTRIBUTE = "serial";
@@ -34,6 +38,9 @@ public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider 
     @Inject
     private PicketBoxIdentity identity;
 
+    /**
+     * Represents the generated token for the current {@link org.jboss.aerogear.security.model.AeroGearUser} logged in.
+     */
     @Produces
     @Token
     public String getToken() {
@@ -44,18 +51,21 @@ public class AuthenticationKeyProviderImpl implements AuthenticationKeyProvider 
         return id;
     }
 
+    /**
+     * Represents the generated secret for the current {@link org.jboss.aerogear.security.model.AeroGearUser} logged in.
+     */
     @Produces
     @Secret
     public String getSecret() {
 
         User user = identity.getUserContext().getUser();
 
-        String secret = user.getAttribute(IDM_SECRET_ATTRIBUTE);
+        Attribute<String> secret = user.getAttribute(IDM_SECRET_ATTRIBUTE);
 
         if (secret == null) {
-            secret = Base32.random();
-            user.setAttribute(IDM_SECRET_ATTRIBUTE, secret);
+            secret = new Attribute<String>(IDM_SECRET_ATTRIBUTE,  Base32.random());
+            user.setAttribute(secret);
         }
-        return secret;
+        return secret.getValue();
     }
 }

@@ -19,18 +19,46 @@ package org.jboss.aerogear.security.picketbox.authz;
 
 
 import org.jboss.aerogear.security.authz.IdentityManagement;
+import org.jboss.aerogear.security.model.AeroGearUser;
+import org.picketlink.idm.IdentityManager;
+import org.picketlink.idm.model.SimpleUser;
+import org.picketlink.idm.model.User;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+/**
+ * <i>IdentityManagement</i> allows to assign a set of roles to {@link org.jboss.aerogear.security.model.AeroGearUser} on Identity Manager provider
+ */
 @ApplicationScoped
 public class IdentityManagementImpl implements IdentityManagement {
 
     @Inject
+    private IdentityManager identityManager;
+
+    @Inject
     private GrantConfiguration grantConfiguration;
 
+    /**
+     * This method allows to specify which <i>roles</i> must be assigned to {@link org.jboss.aerogear.security.model.AeroGearUser}
+     * @param roles The list of roles.
+     * @return {@link GrantMethods} is a builder which a allows to apply a list of roles to the specified {@link org.jboss.aerogear.security.model.AeroGearUser}.
+     */
     @Override
     public GrantMethods grant(String... roles) {
         return grantConfiguration.roles(roles);
+    }
+
+    /**
+     * This method creates a new {@link AeroGearUser}
+     * @param aeroGearUser
+     */
+    @Override
+    public void create(AeroGearUser aeroGearUser) {
+        User picketLinkUser = new SimpleUser(aeroGearUser.getId());
+        picketLinkUser.setEmail(aeroGearUser.getEmail());
+        picketLinkUser.setFirstName(aeroGearUser.getFirstName());
+        picketLinkUser.setLastName(aeroGearUser.getLastName());
+        identityManager.add(picketLinkUser);
     }
 }
