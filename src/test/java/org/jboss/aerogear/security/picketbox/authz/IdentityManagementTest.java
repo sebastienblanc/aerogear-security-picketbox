@@ -25,6 +25,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.picketlink.idm.IdentityManager;
+import org.picketlink.idm.model.SimpleUser;
+import org.picketlink.idm.model.User;
+import static org.junit.Assert.assertNotNull;
 
 import static org.mockito.Mockito.when;
 
@@ -43,6 +46,7 @@ public class IdentityManagementTest {
     public void setUp() throws Exception {
         identityManagement = new IdentityManagementImpl();
         MockitoAnnotations.initMocks(this);
+        when(identityManager.getUser(("john"))).thenReturn(new SimpleUser("john"));
     }
 
     private AeroGearUser buildUser(String username){
@@ -59,5 +63,13 @@ public class IdentityManagementTest {
         String role = "ADMIN";
         when(identityManagement.grant(role)).thenReturn(grantConfiguration);
         identityManagement.grant(role).to(user);
+    }
+
+    @Test
+    public void testCreate() throws  Exception {
+        AeroGearUser user = buildUser("john") ;
+        identityManagement.create(user);
+        User picketLinkuser = identityManager.getUser("john");
+        assertNotNull(picketLinkuser);
     }
 }
