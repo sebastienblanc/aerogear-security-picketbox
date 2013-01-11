@@ -23,7 +23,7 @@
 
     <groupId>org.jboss.aerogear</groupId>
     <artifactId>aerogear-security-picketbox</artifactId>
-    <version>1.0.0.CR1-SNAPSHOT</version>
+    <version>1.0.0.CR1-20130108-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>aerogear-security-picketbox</name>
@@ -73,9 +73,9 @@
         <picketbox.cdi.version>5.0.0-2013Jan04</picketbox.cdi.version>
 
         <!-- Define the version of AeroGear APIs we want to import -->
-        <aerogear.controller.version>1.0.0.M1</aerogear.controller.version>
-        <aerogear.security.version>1.0.0.CR1-SNAPSHOT</aerogear.security.version>
-        <aerogear.otp.version>1.0.0.M1</aerogear.otp.version>
+        <aerogear.controller.version>1.0.0.CR1-20130108-SNAPSHOT</aerogear.controller.version>
+        <aerogear.security.version>1.0.0.CR1-20130108-SNAPSHOT</aerogear.security.version>
+        <aerogear.otp.version>1.0.0.CR1-20130108-SNAPSHOT</aerogear.otp.version>
     </properties>
 
     <build>
