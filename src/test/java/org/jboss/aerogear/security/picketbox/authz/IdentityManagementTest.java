@@ -69,7 +69,7 @@ public class IdentityManagementTest {
     public void testCreate() throws  Exception {
         AeroGearUser user = buildUser("john") ;
         identityManagement.create(user);
-        User picketLinkuser = identityManager.getUser("john");
-        assertNotNull(picketLinkuser);
+        User picketLinkUser = identityManager.getUser("john");
+        assertNotNull(picketLinkUser);
     }
 }
