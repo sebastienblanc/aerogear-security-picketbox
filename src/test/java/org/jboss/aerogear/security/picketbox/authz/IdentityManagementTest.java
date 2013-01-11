@@ -20,6 +20,7 @@ package org.jboss.aerogear.security.picketbox.authz;
 import org.jboss.aerogear.security.authz.IdentityManagement;
 import org.jboss.aerogear.security.model.AeroGearUser;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -27,14 +28,25 @@ import org.mockito.MockitoAnnotations;
 import org.picketlink.idm.IdentityManager;
 import org.picketlink.idm.model.SimpleUser;
 import org.picketlink.idm.model.User;
+import org.picketlink.idm.query.IdentityQuery;
+import org.picketlink.idm.query.internal.DefaultIdentityQuery;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.when;
 
 public class IdentityManagementTest {
 
     @Mock
     private IdentityManager identityManager;
+
+    @Mock
+    private DefaultIdentityQuery defaultIdentityQuery;
 
     @Mock
     private GrantConfiguration grantConfiguration;
@@ -47,6 +59,11 @@ public class IdentityManagementTest {
         identityManagement = new IdentityManagementImpl();
         MockitoAnnotations.initMocks(this);
         when(identityManager.getUser(("john"))).thenReturn(new SimpleUser("john"));
+        when(identityManager.getUser(("mike"))).thenReturn(null);
+        List<User> list = new ArrayList<User>();
+        list.add(new SimpleUser("john"));
+        when(identityManager.createQuery(User.class)).thenReturn(defaultIdentityQuery);
+        when(defaultIdentityQuery.getResultList()).thenReturn(list);
     }
 
     private AeroGearUser buildUser(String username){
@@ -66,10 +83,35 @@ public class IdentityManagementTest {
     }
 
     @Test
-    public void testCreate() throws  Exception {
+    public void testCreate() throws Exception {
         AeroGearUser user = buildUser("john") ;
         identityManagement.create(user);
         User picketLinkUser = identityManager.getUser("john");
         assertNotNull(picketLinkUser);
+    }
+
+    @Test
+    public void testGet() throws Exception {
+        AeroGearUser aeroGearUser = identityManagement.get("john");
+        assertNotNull(aeroGearUser);
+    }
+
+    @Test
+    public void testRemove() throws Exception {
+        AeroGearUser user = buildUser("mike");
+        identityManagement.remove(user);
+        AeroGearUser removedUser = identityManagement.get("mike");
+        assertNull(removedUser);
+    }
+    @Test
+    public void testFindUserByRole() throws Exception {
+        List<AeroGearUser> list = identityManagement.findAllByRole("simple");
+        assertEquals(1,list.size());
+    }
+
+    @Test
+    @Ignore
+    public void testUpdate() throws Exception {
+        //TODO to be implemented
     }
 }
