@@ -20,12 +20,16 @@ package org.jboss.aerogear.security.picketbox.authz;
 
 import org.jboss.aerogear.security.authz.IdentityManagement;
 import org.jboss.aerogear.security.model.AeroGearUser;
+import org.jboss.aerogear.security.picketbox.util.Converter;
 import org.picketlink.idm.IdentityManager;
 import org.picketlink.idm.model.SimpleUser;
 import org.picketlink.idm.model.User;
+import org.picketlink.idm.query.IdentityQuery;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <i>IdentityManagement</i> allows to assign a set of roles to {@link org.jboss.aerogear.security.model.AeroGearUser} on Identity Manager provider
@@ -47,6 +51,32 @@ public class IdentityManagementImpl implements IdentityManagement {
     @Override
     public GrantMethods grant(String... roles) {
         return grantConfiguration.roles(roles);
+    }
+
+    @Override
+    public AeroGearUser get(String id) throws RuntimeException{
+        User user = identityManager.getUser(id);
+        if(user == null){
+          throw new RuntimeException("User do not exist");
+        }
+        return Converter.convertToAerogearUser(identityManager.getUser(id));
+    }
+
+    @Override
+    public void remove(AeroGearUser aeroGearUser) {
+       identityManager.remove(identityManager.getUser(aeroGearUser.getId()));
+    }
+
+    @Override
+    public List<AeroGearUser> findAllByRole(String role) {
+        List aerogearUsers = new ArrayList();
+        IdentityQuery<User> query = identityManager.createQuery(User.class);
+        query.setParameter(User.HAS_ROLE, new String[] {role});
+        List<User> result = query.getResultList();
+        for(User user:result){
+            aerogearUsers.add(Converter.convertToAerogearUser(user));
+        }
+        return aerogearUsers;
     }
 
     /**
