@@ -57,7 +57,7 @@ public class IdentityManagementImpl implements IdentityManagement {
     public AeroGearUser get(String id) throws RuntimeException{
         User user = identityManager.getUser(id);
         if(user == null){
-          throw new RuntimeException();
+          throw new RuntimeException("User do not exist");
         }
         return Converter.convertToAerogearUser(identityManager.getUser(id));
     }
