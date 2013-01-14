@@ -20,7 +20,6 @@ package org.jboss.aerogear.security.picketbox.authz;
 import org.jboss.aerogear.security.authz.IdentityManagement;
 import org.jboss.aerogear.security.model.AeroGearUser;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -28,7 +27,6 @@ import org.mockito.MockitoAnnotations;
 import org.picketlink.idm.IdentityManager;
 import org.picketlink.idm.model.SimpleUser;
 import org.picketlink.idm.model.User;
-import org.picketlink.idm.query.IdentityQuery;
 import org.picketlink.idm.query.internal.DefaultIdentityQuery;
 
 import java.util.ArrayList;
@@ -96,22 +94,17 @@ public class IdentityManagementTest {
         assertNotNull(aeroGearUser);
     }
 
-    @Test
+    @Test(expected = RuntimeException.class)
     public void testRemove() throws Exception {
         AeroGearUser user = buildUser("mike");
         identityManagement.remove(user);
         AeroGearUser removedUser = identityManagement.get("mike");
-        assertNull(removedUser);
     }
+
     @Test
     public void testFindUserByRole() throws Exception {
         List<AeroGearUser> list = identityManagement.findAllByRole("simple");
         assertEquals(1,list.size());
     }
 
-    @Test
-    @Ignore
-    public void testUpdate() throws Exception {
-        //TODO to be implemented
-    }
 }

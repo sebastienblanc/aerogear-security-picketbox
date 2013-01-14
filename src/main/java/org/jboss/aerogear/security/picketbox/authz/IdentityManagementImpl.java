@@ -54,22 +54,17 @@ public class IdentityManagementImpl implements IdentityManagement {
     }
 
     @Override
-    public AeroGearUser get(String id) {
+    public AeroGearUser get(String id) throws RuntimeException{
         User user = identityManager.getUser(id);
-        if(user != null){
-          return Converter.convertToAerogearUser(identityManager.getUser(id));
+        if(user == null){
+          throw new RuntimeException();
         }
-        return null;
+        return Converter.convertToAerogearUser(identityManager.getUser(id));
     }
 
     @Override
     public void remove(AeroGearUser aeroGearUser) {
        identityManager.remove(identityManager.getUser(aeroGearUser.getId()));
-    }
-
-    @Override
-    public void update(AeroGearUser aeroGearUser) {
-        //TODO implement
     }
 
     @Override
